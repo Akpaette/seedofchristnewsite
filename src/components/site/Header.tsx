@@ -1,0 +1,84 @@
+import { useState } from "react";
+import { Link } from "@tanstack/react-router";
+import { Menu, X, MapPin } from "lucide-react";
+import { NAV_PRIMARY, NAV_MORE } from "@/lib/church-data";
+
+const ITEMS = [...NAV_PRIMARY, ...NAV_MORE];
+
+export default function Header() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  return (
+    <header className="sticky top-0 z-40">
+      {/* Locations strip. Service times are deliberately omitted until confirmed. */}
+      <div
+        className="bg-gold text-ink font-label flex w-full flex-wrap items-center justify-center gap-x-5 gap-y-1 px-4 py-1.5 text-[11px] font-semibold md:text-xs"
+        style={{ letterSpacing: "0.03em" }}
+      >
+        <span className="flex items-center gap-1.5">
+          <MapPin size={12} /> IBADAN · SANGO OTA · ILESHA · LONDON
+        </span>
+      </div>
+
+      <div className="bg-ink flex items-center justify-between px-4 py-3 md:px-8">
+        <Link to="/" className="flex items-center gap-2.5 text-left">
+          <div
+            className="bg-gold text-ink font-display flex h-9 w-9 items-center justify-center text-sm font-bold"
+            style={{ fontSize: 18 }}
+          >
+            SC
+          </div>
+          <div className="leading-tight">
+            <div
+              className="font-display text-porcelain text-sm font-bold"
+              style={{ letterSpacing: "0.02em" }}
+            >
+              SEED OF CHRIST GOLDEN CHURCH
+            </div>
+            <div className="text-gold text-[10px] tracking-[0.2em]">WORLDWIDE</div>
+          </div>
+        </Link>
+
+        <nav className="hidden items-center gap-1 lg:flex">
+          {ITEMS.map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              activeOptions={{ exact: item.to === "/" }}
+              className="font-label text-porcelain px-3 py-2 text-xs font-semibold tracking-wide uppercase"
+              activeProps={{ className: "text-gold" }}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+
+        <button
+          className="p-2 lg:hidden"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          {menuOpen ? <X color="#F4F0E6" /> : <Menu color="#F4F0E6" />}
+        </button>
+      </div>
+
+      {menuOpen && (
+        <nav className="bg-ink2 flex flex-col lg:hidden">
+          {ITEMS.map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              activeOptions={{ exact: item.to === "/" }}
+              onClick={() => setMenuOpen(false)}
+              className="font-label text-porcelain border-b border-white/10 px-5 py-3.5 text-left text-sm font-semibold tracking-wide uppercase"
+              activeProps={{ className: "text-gold" }}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+      )}
+    </header>
+  );
+}

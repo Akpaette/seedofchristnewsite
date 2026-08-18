@@ -19,6 +19,19 @@
  */
 
 @theme inline {
+  --color-ink: #17130f;
+  --color-ink2: #241f19;
+  --color-porcelain: #f4f0e6;
+  --color-paper: #eae2ce;
+  --color-gold: #e7b23a;
+  --color-golddeep: #b9862a;
+  --color-crimson: #c81e3a;
+  --color-indigo: #241b4a;
+  --color-charcoal: #201c18;
+  --color-line: #dcd2b4;
+  --font-display: "Bebas Neue", sans-serif;
+  --font-body: Inter, sans-serif;
+  --font-label: "Space Grotesk", sans-serif;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -135,10 +148,28 @@
 @layer base {
   * {
     border-color: var(--color-border);
+    -webkit-tap-highlight-color: transparent;
   }
 
   body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
+    background-color: var(--color-porcelain);
+    color: var(--color-charcoal);
+    font-family: var(--font-body);
+  }
+
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: 3px solid var(--color-crimson);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      transition: none !important;
+      animation: none !important;
+    }
   }
 }
