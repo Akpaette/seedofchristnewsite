@@ -19,6 +19,19 @@
  */
 
 @theme inline {
+  --color-ink: #17130f;
+  --color-ink2: #241f19;
+  --color-porcelain: #f4f0e6;
+  --color-paper: #eae2ce;
+  --color-gold: #e7b23a;
+  --color-golddeep: #b9862a;
+  --color-crimson: #c81e3a;
+  --color-indigo: #241b4a;
+  --color-charcoal: #201c18;
+  --color-line: #dcd2b4;
+  --font-display: "Bebas Neue", sans-serif;
+  --font-body: Inter, sans-serif;
+  --font-label: "Space Grotesk", sans-serif;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
