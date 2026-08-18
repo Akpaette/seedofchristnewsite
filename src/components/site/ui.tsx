@@ -15,8 +15,8 @@ export function Reveal({
     const el = ref.current;
     if (!el) return;
     const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
           setVisible(true);
           io.disconnect();
         }
@@ -62,7 +62,13 @@ export function Beam({ style }: { style?: React.CSSProperties }) {
   );
 }
 
-export function Label({ children, dark }: { children: ReactNode; dark?: boolean }) {
+export function Label({
+  children,
+  dark,
+}: {
+  children: ReactNode;
+  dark?: boolean | undefined;
+}) {
   return (
     <div
       className={`font-label mb-3 text-xs font-semibold uppercase ${dark ? "text-gold" : "text-crimson"}`}
@@ -81,7 +87,7 @@ export function Display({
 }: {
   children: ReactNode;
   className?: string;
-  color?: string;
+  color?: string | undefined;
   as?: "h1" | "h2" | "h3" | "div";
 }) {
   return (
@@ -101,10 +107,10 @@ export function SectionHead({
   dark,
   as = "h2",
 }: {
-  label?: string;
+  label?: string | undefined;
   title: string;
-  sub?: string;
-  dark?: boolean;
+  sub?: string | undefined;
+  dark?: boolean | undefined;
   as?: "h1" | "h2";
 }) {
   return (
@@ -140,11 +146,11 @@ export function Btn({
   disabled,
 }: {
   children: ReactNode;
-  onClick?: () => void;
+  onClick?: (() => void) | undefined;
   tone?: keyof typeof TONES;
   icon?: LucideIcon;
   type?: "button" | "submit";
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 }) {
   return (
     <button
