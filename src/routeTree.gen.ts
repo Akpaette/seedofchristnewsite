@@ -10,33 +10,167 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as BibleCollegeRouteImport } from './routes/bible-college'
+import { Route as BranchesRouteImport } from './routes/branches'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as EventsRouteImport } from './routes/events'
+import { Route as GiveRouteImport } from './routes/give'
+import { Route as MinistriesRouteImport } from './routes/ministries'
+import { Route as PrayerRouteImport } from './routes/prayer'
+import { Route as RadioRouteImport } from './routes/radio'
+import { Route as SermonsRouteImport } from './routes/sermons'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BibleCollegeRoute = BibleCollegeRouteImport.update({
+  id: '/bible-college',
+  path: '/bible-college',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BranchesRoute = BranchesRouteImport.update({
+  id: '/branches',
+  path: '/branches',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventsRoute = EventsRouteImport.update({
+  id: '/events',
+  path: '/events',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GiveRoute = GiveRouteImport.update({
+  id: '/give',
+  path: '/give',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MinistriesRoute = MinistriesRouteImport.update({
+  id: '/ministries',
+  path: '/ministries',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrayerRoute = PrayerRouteImport.update({
+  id: '/prayer',
+  path: '/prayer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RadioRoute = RadioRouteImport.update({
+  id: '/radio',
+  path: '/radio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SermonsRoute = SermonsRouteImport.update({
+  id: '/sermons',
+  path: '/sermons',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/bible-college': typeof BibleCollegeRoute
+  '/branches': typeof BranchesRoute
+  '/contact': typeof ContactRoute
+  '/events': typeof EventsRoute
+  '/give': typeof GiveRoute
+  '/ministries': typeof MinistriesRoute
+  '/prayer': typeof PrayerRoute
+  '/radio': typeof RadioRoute
+  '/sermons': typeof SermonsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/bible-college': typeof BibleCollegeRoute
+  '/branches': typeof BranchesRoute
+  '/contact': typeof ContactRoute
+  '/events': typeof EventsRoute
+  '/give': typeof GiveRoute
+  '/ministries': typeof MinistriesRoute
+  '/prayer': typeof PrayerRoute
+  '/radio': typeof RadioRoute
+  '/sermons': typeof SermonsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/bible-college': typeof BibleCollegeRoute
+  '/branches': typeof BranchesRoute
+  '/contact': typeof ContactRoute
+  '/events': typeof EventsRoute
+  '/give': typeof GiveRoute
+  '/ministries': typeof MinistriesRoute
+  '/prayer': typeof PrayerRoute
+  '/radio': typeof RadioRoute
+  '/sermons': typeof SermonsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/bible-college'
+    | '/branches'
+    | '/contact'
+    | '/events'
+    | '/give'
+    | '/ministries'
+    | '/prayer'
+    | '/radio'
+    | '/sermons'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/bible-college'
+    | '/branches'
+    | '/contact'
+    | '/events'
+    | '/give'
+    | '/ministries'
+    | '/prayer'
+    | '/radio'
+    | '/sermons'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/bible-college'
+    | '/branches'
+    | '/contact'
+    | '/events'
+    | '/give'
+    | '/ministries'
+    | '/prayer'
+    | '/radio'
+    | '/sermons'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  BibleCollegeRoute: typeof BibleCollegeRoute
+  BranchesRoute: typeof BranchesRoute
+  ContactRoute: typeof ContactRoute
+  EventsRoute: typeof EventsRoute
+  GiveRoute: typeof GiveRoute
+  MinistriesRoute: typeof MinistriesRoute
+  PrayerRoute: typeof PrayerRoute
+  RadioRoute: typeof RadioRoute
+  SermonsRoute: typeof SermonsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +182,91 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bible-college': {
+      id: '/bible-college'
+      path: '/bible-college'
+      fullPath: '/bible-college'
+      preLoaderRoute: typeof BibleCollegeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/branches': {
+      id: '/branches'
+      path: '/branches'
+      fullPath: '/branches'
+      preLoaderRoute: typeof BranchesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/events': {
+      id: '/events'
+      path: '/events'
+      fullPath: '/events'
+      preLoaderRoute: typeof EventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/give': {
+      id: '/give'
+      path: '/give'
+      fullPath: '/give'
+      preLoaderRoute: typeof GiveRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ministries': {
+      id: '/ministries'
+      path: '/ministries'
+      fullPath: '/ministries'
+      preLoaderRoute: typeof MinistriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/prayer': {
+      id: '/prayer'
+      path: '/prayer'
+      fullPath: '/prayer'
+      preLoaderRoute: typeof PrayerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/radio': {
+      id: '/radio'
+      path: '/radio'
+      fullPath: '/radio'
+      preLoaderRoute: typeof RadioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sermons': {
+      id: '/sermons'
+      path: '/sermons'
+      fullPath: '/sermons'
+      preLoaderRoute: typeof SermonsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  BibleCollegeRoute: BibleCollegeRoute,
+  BranchesRoute: BranchesRoute,
+  ContactRoute: ContactRoute,
+  EventsRoute: EventsRoute,
+  GiveRoute: GiveRoute,
+  MinistriesRoute: MinistriesRoute,
+  PrayerRoute: PrayerRoute,
+  RadioRoute: RadioRoute,
+  SermonsRoute: SermonsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
