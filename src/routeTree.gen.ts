@@ -15,6 +15,7 @@ import { Route as BibleCollegeRouteImport } from './routes/bible-college'
 import { Route as BranchesRouteImport } from './routes/branches'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as EventsRouteImport } from './routes/events'
+import { Route as GiveRouteImport } from './routes/give'
 import { Route as MinistriesRouteImport } from './routes/ministries'
 import { Route as PrayerRouteImport } from './routes/prayer'
 import { Route as RadioRouteImport } from './routes/radio'
@@ -50,6 +51,11 @@ const EventsRoute = EventsRouteImport.update({
   path: '/events',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GiveRoute = GiveRouteImport.update({
+  id: '/give',
+  path: '/give',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MinistriesRoute = MinistriesRouteImport.update({
   id: '/ministries',
   path: '/ministries',
@@ -78,6 +84,7 @@ export interface FileRoutesByFullPath {
   '/branches': typeof BranchesRoute
   '/contact': typeof ContactRoute
   '/events': typeof EventsRoute
+  '/give': typeof GiveRoute
   '/ministries': typeof MinistriesRoute
   '/prayer': typeof PrayerRoute
   '/radio': typeof RadioRoute
@@ -90,6 +97,7 @@ export interface FileRoutesByTo {
   '/branches': typeof BranchesRoute
   '/contact': typeof ContactRoute
   '/events': typeof EventsRoute
+  '/give': typeof GiveRoute
   '/ministries': typeof MinistriesRoute
   '/prayer': typeof PrayerRoute
   '/radio': typeof RadioRoute
@@ -103,6 +111,7 @@ export interface FileRoutesById {
   '/branches': typeof BranchesRoute
   '/contact': typeof ContactRoute
   '/events': typeof EventsRoute
+  '/give': typeof GiveRoute
   '/ministries': typeof MinistriesRoute
   '/prayer': typeof PrayerRoute
   '/radio': typeof RadioRoute
@@ -117,6 +126,7 @@ export interface FileRouteTypes {
     | '/branches'
     | '/contact'
     | '/events'
+    | '/give'
     | '/ministries'
     | '/prayer'
     | '/radio'
@@ -129,6 +139,7 @@ export interface FileRouteTypes {
     | '/branches'
     | '/contact'
     | '/events'
+    | '/give'
     | '/ministries'
     | '/prayer'
     | '/radio'
@@ -141,6 +152,7 @@ export interface FileRouteTypes {
     | '/branches'
     | '/contact'
     | '/events'
+    | '/give'
     | '/ministries'
     | '/prayer'
     | '/radio'
@@ -154,6 +166,7 @@ export interface RootRouteChildren {
   BranchesRoute: typeof BranchesRoute
   ContactRoute: typeof ContactRoute
   EventsRoute: typeof EventsRoute
+  GiveRoute: typeof GiveRoute
   MinistriesRoute: typeof MinistriesRoute
   PrayerRoute: typeof PrayerRoute
   RadioRoute: typeof RadioRoute
@@ -204,6 +217,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/give': {
+      id: '/give'
+      path: '/give'
+      fullPath: '/give'
+      preLoaderRoute: typeof GiveRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/ministries': {
       id: '/ministries'
       path: '/ministries'
@@ -242,6 +262,7 @@ const rootRouteChildren: RootRouteChildren = {
   BranchesRoute: BranchesRoute,
   ContactRoute: ContactRoute,
   EventsRoute: EventsRoute,
+  GiveRoute: GiveRoute,
   MinistriesRoute: MinistriesRoute,
   PrayerRoute: PrayerRoute,
   RadioRoute: RadioRoute,
