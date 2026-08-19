@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as BibleCollegeRouteImport } from './routes/bible-college'
 import { Route as BranchesRouteImport } from './routes/branches'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as MinistriesRouteImport } from './routes/ministries'
 import { Route as PrayerRouteImport } from './routes/prayer'
@@ -36,6 +37,11 @@ const BibleCollegeRoute = BibleCollegeRouteImport.update({
 const BranchesRoute = BranchesRouteImport.update({
   id: '/branches',
   path: '/branches',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EventsRoute = EventsRouteImport.update({
@@ -64,6 +70,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/bible-college': typeof BibleCollegeRoute
   '/branches': typeof BranchesRoute
+  '/contact': typeof ContactRoute
   '/events': typeof EventsRoute
   '/ministries': typeof MinistriesRoute
   '/prayer': typeof PrayerRoute
@@ -74,6 +81,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/bible-college': typeof BibleCollegeRoute
   '/branches': typeof BranchesRoute
+  '/contact': typeof ContactRoute
   '/events': typeof EventsRoute
   '/ministries': typeof MinistriesRoute
   '/prayer': typeof PrayerRoute
@@ -85,6 +93,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/bible-college': typeof BibleCollegeRoute
   '/branches': typeof BranchesRoute
+  '/contact': typeof ContactRoute
   '/events': typeof EventsRoute
   '/ministries': typeof MinistriesRoute
   '/prayer': typeof PrayerRoute
@@ -97,6 +106,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/bible-college'
     | '/branches'
+    | '/contact'
     | '/events'
     | '/ministries'
     | '/prayer'
@@ -107,6 +117,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/bible-college'
     | '/branches'
+    | '/contact'
     | '/events'
     | '/ministries'
     | '/prayer'
@@ -117,6 +128,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/bible-college'
     | '/branches'
+    | '/contact'
     | '/events'
     | '/ministries'
     | '/prayer'
@@ -128,6 +140,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   BibleCollegeRoute: typeof BibleCollegeRoute
   BranchesRoute: typeof BranchesRoute
+  ContactRoute: typeof ContactRoute
   EventsRoute: typeof EventsRoute
   MinistriesRoute: typeof MinistriesRoute
   PrayerRoute: typeof PrayerRoute
@@ -162,6 +175,13 @@ declare module '@tanstack/react-router' {
       path: '/branches'
       fullPath: '/branches'
       preLoaderRoute: typeof BranchesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/events': {
@@ -200,6 +220,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   BibleCollegeRoute: BibleCollegeRoute,
   BranchesRoute: BranchesRoute,
+  ContactRoute: ContactRoute,
   EventsRoute: EventsRoute,
   MinistriesRoute: MinistriesRoute,
   PrayerRoute: PrayerRoute,
