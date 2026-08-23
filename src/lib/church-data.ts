@@ -5,6 +5,9 @@
 // NOTE: Service times are intentionally NOT published anywhere on the site yet —
 // the church has not confirmed them. Do not add a SERVICE_TIMES export until they do.
 
+import apostlePhoto from "@/assets/apostle-mustapha.jpg.asset.json";
+
+
 export type Branch = {
   name: string;
   state: string;
