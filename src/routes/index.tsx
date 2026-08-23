@@ -81,6 +81,39 @@ function Index() {
         </div>
       </section>
 
+      <section className="bg-porcelain relative overflow-hidden px-4 py-16 md:px-8">
+        <Beam style={{ top: "8%", opacity: 0.1 }} />
+        <div className="relative mx-auto grid max-w-5xl items-center gap-8 md:grid-cols-[minmax(0,320px)_1fr]">
+          <img
+            src={apostlePhoto.url}
+            alt="Apostle Dr. S.M.O. Mustapha JP, General Overseer of Seed of Christ Golden Church Worldwide, in red ministerial vestments"
+            loading="lazy"
+            decoding="async"
+            className="border-ink w-full border-2 object-cover"
+          />
+          <div>
+            <Label>Our General Overseer</Label>
+            <Display as="h2" className="text-4xl md:text-5xl">
+              APOSTLE DR. S.M.O. MUSTAPHA JP
+            </Display>
+            <p className="font-label mt-2 text-xs uppercase opacity-60">
+              Also known as Baba Sebioba · with Prophetess Eunice Mustapha (Mama
+              Sebioba), Mother in Israel
+            </p>
+            <p className="mt-4 max-w-lg text-base opacity-75">
+              Shepherding the church from the Ibadan headquarters to branches across
+              Nigeria and the United Kingdom.
+            </p>
+            <div className="mt-6">
+              <Link to="/about">
+                <Btn tone="ghostDark">Meet our leaders</Btn>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
       <section className="mx-auto max-w-5xl px-4 py-16 md:px-8">
         <Reveal>
           <SectionHead label="Latest from us" title="RECENT MESSAGES" />
