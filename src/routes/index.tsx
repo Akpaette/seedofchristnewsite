@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Facebook, Youtube, Instagram, Radio as RadioIcon, Tv, Play } from "lucide-react";
 import { Beam, Btn, Display, Label, Reveal, SectionHead, inputClass } from "@/components/site/ui";
 import { SERMONS } from "@/lib/church-data";
+import apostlePhoto from "@/assets/apostle-mustapha.jpg.asset.json";
 
 const TITLE = "Seed of Christ Golden Church Worldwide — Ibadan to London";
 const DESCRIPTION =
