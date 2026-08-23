@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Menu, X, MapPin } from "lucide-react";
 import { NAV_PRIMARY, NAV_MORE } from "@/lib/church-data";
+import logoAsset from "@/assets/church-logo.jpg.asset.json";
 
 const ITEMS = [...NAV_PRIMARY, ...NAV_MORE];
 
