@@ -22,12 +22,13 @@ export default function Header() {
 
       <div className="bg-ink flex items-center justify-between px-4 py-3 md:px-8">
         <Link to="/" className="flex items-center gap-2.5 text-left">
-          <div
-            className="bg-gold text-ink font-display flex h-9 w-9 items-center justify-center text-sm font-bold"
-            style={{ fontSize: 18 }}
-          >
-            SC
-          </div>
+          <img
+            src={logoAsset.url}
+            alt="Seed of Christ Golden Church Worldwide crest: two doves over a globe"
+            width={40}
+            height={40}
+            className="h-10 w-10 object-contain"
+          />
           <div className="leading-tight">
             <div
               className="font-display text-porcelain text-sm font-bold"
