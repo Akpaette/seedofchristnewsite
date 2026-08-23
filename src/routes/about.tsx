@@ -49,9 +49,19 @@ function AboutPage() {
               key={i}
               className={`border-2 ${incomplete ? "border-crimson" : "border-ink"}`}
             >
-              <div className="bg-paper text-ink font-label flex aspect-[4/3] items-center justify-center text-xs font-semibold uppercase">
-                {l.photo ? "[REAL PHOTO NEEDED]" : "[PHOTO MISSING]"}
-              </div>
+              {l.photoUrl ? (
+                <img
+                  src={l.photoUrl}
+                  alt={`${l.name}, ${l.title}, Seed of Christ Golden Church Worldwide`}
+                  loading="lazy"
+                  decoding="async"
+                  className="aspect-[4/3] w-full object-cover object-top"
+                />
+              ) : (
+                <div className="bg-paper text-crimson font-label flex aspect-[4/3] items-center justify-center px-2 text-center text-xs font-semibold uppercase">
+                  [REAL PHOTO NEEDED]
+                </div>
+              )}
               <div className="p-4">
                 {incomplete ? (
                   <Flag>Incomplete profile — flagged for the church</Flag>
@@ -60,6 +70,11 @@ function AboutPage() {
                     <Display as="h3" className="text-xl">
                       {l.name.toUpperCase()}
                     </Display>
+                    {l.alsoKnownAs && (
+                      <div className="font-label text-xs opacity-60">
+                        Also known as {l.alsoKnownAs}
+                      </div>
+                    )}
                     <div className="mt-1 text-sm opacity-70">{l.title}</div>
                     <div className="text-crimson mt-1 text-xs font-semibold">{l.branch}</div>
                   </>
