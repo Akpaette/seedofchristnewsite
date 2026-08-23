@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Facebook, Youtube, Instagram, Radio as RadioIcon, Tv } from "lucide-react";
 import { NAV_MORE } from "@/lib/church-data";
 import { Display } from "./ui";
+import logoAsset from "@/assets/church-logo.jpg.asset.json";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -10,6 +11,14 @@ export default function Footer() {
     <footer className="bg-ink text-paper px-4 pt-14 pb-24 md:px-8 lg:pb-10">
       <div className="mx-auto grid max-w-5xl gap-8 text-sm md:grid-cols-4">
         <div>
+          <img
+            src={logoAsset.url}
+            alt="Seed of Christ Golden Church Worldwide crest: two doves over a globe"
+            width={56}
+            height={56}
+            loading="lazy"
+            className="mb-3 h-14 w-14 object-contain"
+          />
           <Display as="div" className="text-2xl" color="#E7B23A">
             SEED OF CHRIST GOLDEN CHURCH
           </Display>

@@ -5,6 +5,9 @@
 // NOTE: Service times are intentionally NOT published anywhere on the site yet —
 // the church has not confirmed them. Do not add a SERVICE_TIMES export until they do.
 
+import apostlePhoto from "@/assets/apostle-mustapha.jpg.asset.json";
+
+
 export type Branch = {
   name: string;
   state: string;
@@ -52,20 +55,32 @@ export type Leader = {
   title: string;
   branch: string;
   photo: boolean;
+  /** CDN URL of a supplied photograph, when one exists. */
+  photoUrl?: string;
+  alsoKnownAs?: string;
 };
 
 export const LEADERS: Leader[] = [
   {
-    name: "[PLACEHOLDER — General Overseer's name]",
+    name: "Apostle Dr. S.M.O. Mustapha JP",
+    alsoKnownAs: "Baba Sebioba",
     title: "General Overseer",
     branch: "Ibadan HQ",
     photo: true,
+    photoUrl: apostlePhoto.url,
+  },
+  {
+    name: "Prophetess Eunice Mustapha",
+    alsoKnownAs: "Mama Sebioba",
+    title: "Mother in Israel",
+    branch: "Ibadan HQ",
+    photo: false,
   },
   {
     name: "John Akpaette",
     title: "General Administrative Officer",
     branch: "Ibadan HQ",
-    photo: true,
+    photo: false,
   },
   { name: "", title: "", branch: "", photo: false },
 ];
