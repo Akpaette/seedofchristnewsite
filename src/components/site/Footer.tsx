@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Facebook, Youtube, Instagram, Radio as RadioIcon, Tv } from "lucide-react";
 import { NAV_MORE } from "@/lib/church-data";
 import { Display } from "./ui";
+import logoAsset from "@/assets/church-logo.jpg.asset.json";
 
 export default function Footer() {
   const year = new Date().getFullYear();
