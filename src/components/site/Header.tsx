@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Menu, X, MapPin } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { NAV_PRIMARY, NAV_MORE } from "@/lib/church-data";
 import logoAsset from "@/assets/church-logo.jpg.asset.json";
 
@@ -11,15 +11,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-40">
-      {/* Locations strip. Service times are deliberately omitted until confirmed. */}
-      <div
-        className="bg-gold text-ink font-label flex w-full flex-wrap items-center justify-center gap-x-5 gap-y-1 px-4 py-1.5 text-[11px] font-semibold md:text-xs"
-        style={{ letterSpacing: "0.03em" }}
-      >
-        <span className="flex items-center gap-1.5">
-          <MapPin size={12} /> IBADAN · SANGO OTA · ILESHA · LONDON
-        </span>
-      </div>
+
 
       <div className="bg-ink flex items-center justify-between px-4 py-3 md:px-8">
         <Link to="/" className="flex items-center gap-2.5 text-left">
