@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Facebook, Youtube, Instagram, Radio as RadioIcon, Tv, Play } from "lucide-react";
+import { Facebook, Youtube, Instagram, Radio as RadioIcon, Tv, Play, Smartphone, ExternalLink } from "lucide-react";
 import { Beam, Btn, Display, Label, Reveal, SectionHead, inputClass } from "@/components/site/ui";
-import { SERMONS } from "@/lib/church-data";
+import { PhotoReel } from "@/components/site/PhotoReel";
+import { APP_LINKS, SERMONS } from "@/lib/church-data";
 import apostlePhoto from "@/assets/apostle-mustapha.jpg.asset.json";
 
 const TITLE = "Seed of Christ Golden Church Worldwide — Ibadan to London";
@@ -21,13 +22,6 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const GALLERY = [
-  "Sunday worship",
-  "Choir ministration",
-  "Bible college class",
-  "Outreach & fellowship",
-  "Children's church",
-];
 
 const CHANNELS = [
   { icon: Facebook, label: "Facebook" },
@@ -66,20 +60,7 @@ function Index() {
           </div>
         </div>
 
-        <div
-          className="relative mx-auto mt-16 flex max-w-6xl gap-3 overflow-x-auto pb-2"
-          style={{ scrollSnapType: "x mandatory" }}
-        >
-          {GALLERY.map((cap, i) => (
-            <div
-              key={cap}
-              className={`font-label border-crimson flex aspect-[4/5] w-[70vw] shrink-0 items-end border-2 border-dashed p-4 text-xs font-semibold tracking-wide uppercase sm:w-[280px] ${i % 2 ? "bg-indigo text-porcelain" : "bg-paper text-ink"}`}
-              style={{ scrollSnapAlign: "start" }}
-            >
-              ⚠ [REAL PHOTO NEEDED — {cap}]
-            </div>
-          ))}
-        </div>
+        <PhotoReel />
       </section>
 
       <section className="bg-porcelain relative overflow-hidden px-4 py-16 md:px-8">

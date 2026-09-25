@@ -173,3 +173,25 @@
     }
   }
 }
+
+/* Moving photography strip (home hero) */
+@keyframes reel-drift {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes reel-kenburns {
+  0%, 100% { transform: scale(1.04) translate(0, 0); }
+  50% { transform: scale(1.12) translate(-2%, -1%); }
+}
+.photo-reel-track { animation: reel-drift 70s linear infinite; }
+.photo-reel-img { animation: reel-kenburns 18s ease-in-out infinite; }
+.photo-reel:hover .photo-reel-track,
+.photo-reel:focus-within .photo-reel-track,
+.photo-reel[data-paused] .photo-reel-track,
+.photo-reel[data-paused] .photo-reel-img { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .photo-reel { overflow-x: auto; scroll-snap-type: x mandatory; }
+  .photo-reel-track li { scroll-snap-align: start; }
+  .photo-reel-track li[aria-hidden] { display: none; }
+  .photo-reel-toggle { display: none; }
+}
