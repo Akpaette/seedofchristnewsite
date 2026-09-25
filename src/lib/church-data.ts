@@ -8,47 +8,13 @@
 import apostlePhoto from "@/assets/apostle-mustapha.jpg.asset.json";
 
 
-export type Branch = {
-  name: string;
-  state: string;
-  address: string;
-  phone: string;
-  hq?: boolean;
-};
+export type { Branch } from "./branches-data";
+export { BRANCHES } from "./branches-data";
 
-export const BRANCHES: Branch[] = [
-  {
-    name: "Ibadan (Headquarters)",
-    state: "Oyo State, Nigeria",
-    address: "[PLACEHOLDER street address], Ibadan",
-    phone: "[PLACEHOLDER phone]",
-    hq: true,
-  },
-  {
-    name: "Sango Ota",
-    state: "Ogun State, Nigeria",
-    address: "[PLACEHOLDER street address], Sango Ota",
-    phone: "[PLACEHOLDER phone]",
-  },
-  {
-    name: "Ilesha",
-    state: "Osun State, Nigeria",
-    address: "[PLACEHOLDER street address], Ilesha",
-    phone: "[PLACEHOLDER phone]",
-  },
-  {
-    name: "London / Enfield",
-    state: "United Kingdom",
-    address: "[PLACEHOLDER street address], Enfield, London",
-    phone: "[PLACEHOLDER phone]",
-  },
-  {
-    name: "[PLACEHOLDER branch]",
-    state: "[PLACEHOLDER region]",
-    address: "[PLACEHOLDER street address]",
-    phone: "[PLACEHOLDER phone]",
-  },
-];
+export const APP_LINKS = {
+  android: "https://play.google.com/store/apps/details?id=com.churchcast.scgc",
+  ios: "https://apps.apple.com/us/app/seed-of-christ-golden-church/id6797294392",
+};
 
 export type Leader = {
   name: string;

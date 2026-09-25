@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Facebook, Youtube, Instagram, Radio as RadioIcon, Tv, Play } from "lucide-react";
+import { Facebook, Youtube, Instagram, Radio as RadioIcon, Tv, Play, Smartphone, ExternalLink } from "lucide-react";
 import { Beam, Btn, Display, Label, Reveal, SectionHead, inputClass } from "@/components/site/ui";
-import { SERMONS } from "@/lib/church-data";
+import { PhotoReel } from "@/components/site/PhotoReel";
+import { APP_LINKS, SERMONS } from "@/lib/church-data";
 import apostlePhoto from "@/assets/apostle-mustapha.jpg.asset.json";
 
 const TITLE = "Seed of Christ Golden Church Worldwide — Ibadan to London";
@@ -21,13 +22,6 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const GALLERY = [
-  "Sunday worship",
-  "Choir ministration",
-  "Bible college class",
-  "Outreach & fellowship",
-  "Children's church",
-];
 
 const CHANNELS = [
   { icon: Facebook, label: "Facebook" },
@@ -66,20 +60,7 @@ function Index() {
           </div>
         </div>
 
-        <div
-          className="relative mx-auto mt-16 flex max-w-6xl gap-3 overflow-x-auto pb-2"
-          style={{ scrollSnapType: "x mandatory" }}
-        >
-          {GALLERY.map((cap, i) => (
-            <div
-              key={cap}
-              className={`font-label border-crimson flex aspect-[4/5] w-[70vw] shrink-0 items-end border-2 border-dashed p-4 text-xs font-semibold tracking-wide uppercase sm:w-[280px] ${i % 2 ? "bg-indigo text-porcelain" : "bg-paper text-ink"}`}
-              style={{ scrollSnapAlign: "start" }}
-            >
-              ⚠ [REAL PHOTO NEEDED — {cap}]
-            </div>
-          ))}
-        </div>
+        <PhotoReel />
       </section>
 
       <section className="bg-porcelain relative overflow-hidden px-4 py-16 md:px-8">
@@ -166,6 +147,41 @@ function Index() {
               ))}
             </div>
           </Reveal>
+        </div>
+      </section>
+
+      <section aria-labelledby="app-heading" className="bg-indigo relative overflow-hidden px-4 py-16 md:px-8">
+        <Beam style={{ top: "40%", opacity: 0.1 }} />
+        <div className="relative mx-auto max-w-3xl text-center">
+          <Smartphone size={28} color="#E7B23A" className="mx-auto mb-3" aria-hidden="true" />
+          <Label dark>Official mobile app</Label>
+          <Display as="h2" className="text-4xl md:text-5xl" color="#F4F0E6">
+            <span id="app-heading">SEED OF CHRIST GOLDEN CHURCH APP</span>
+          </Display>
+          <p className="text-porcelain mx-auto mt-4 max-w-xl opacity-80">
+            Stay connected to the ministry wherever you are. Listen to messages, prayer
+            sessions, and other church content directly from the Seed of Christ Golden
+            Church App.
+          </p>
+          <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
+            {[
+              { href: APP_LINKS.android, label: "Download on Android", store: "Google Play" },
+              { href: APP_LINKS.ios, label: "Download on iOS", store: "the App Store" },
+            ].map((a) => (
+              <a
+                key={a.href}
+                href={a.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${a.label} — opens ${a.store} in a new tab`}
+                className="bg-gold text-ink font-label inline-flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-bold tracking-wide uppercase transition-transform active:scale-95"
+                style={{ letterSpacing: "0.06em" }}
+              >
+                {a.label}
+                <ExternalLink size={15} aria-hidden="true" />
+              </a>
+            ))}
+          </div>
         </div>
       </section>
 
