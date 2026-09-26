@@ -9,6 +9,9 @@ import p53 from "@/assets/church-photo-53.jpg.asset.json";
 import p54 from "@/assets/church-photo-54.jpg.asset.json";
 import p55 from "@/assets/church-photo-55.jpg.asset.json";
 import p58 from "@/assets/church-photo-58.jpg.asset.json";
+import p0047 from "@/assets/church-worship-0047.jpg.asset.json";
+import p0048 from "@/assets/church-worship-0048.jpg.asset.json";
+import p0053 from "@/assets/church-worship-0053.jpg.asset.json";
 
 const PHOTOS = [
   { src: p44.url, alt: "Minister addressing a full congregation in the Seed of Christ Golden Church auditorium" },
@@ -20,6 +23,9 @@ const PHOTOS = [
   { src: p54.url, alt: "Sepia photo of members dancing joyfully during a street evangelism outreach" },
   { src: p55.url, alt: "Black-and-white photo of the evangelism team holding placards on the street" },
   { src: p58.url, alt: "Wide view of a full congregation seated in rows during a service" },
+  { src: p0048.url, alt: "Church leaders standing together at the front of the sanctuary during a service" },
+  { src: p0053.url, alt: "A large congregation lifting their hands and worship materials during a prayer gathering" },
+  { src: p0047.url, alt: "Worshippers gathered across the church auditorium during a lively service" },
 ];
 
 /** Continuously drifting photo strip. Pausable; static & scrollable under reduced motion. */
