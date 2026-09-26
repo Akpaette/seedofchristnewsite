@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep website message and prayer-session content in the official Church App rather than duplicating it on web pages, because the app is the maintained media destination.

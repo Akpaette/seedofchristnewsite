@@ -6,6 +6,7 @@
 // the church has not confirmed them. Do not add a SERVICE_TIMES export until they do.
 
 import apostlePhoto from "@/assets/apostle-mustapha.jpg.asset.json";
+import prophetessPhoto from "@/assets/prophetess-eunice-mustapha.jpg.asset.json";
 
 
 export type { Branch } from "./branches-data";
@@ -40,46 +41,8 @@ export const LEADERS: Leader[] = [
     alsoKnownAs: "Mama Sebioba",
     title: "Mother in Israel",
     branch: "Ibadan HQ",
-    photo: false,
-  },
-  {
-    name: "John Akpaette",
-    title: "General Administrative Officer",
-    branch: "Ibadan HQ",
-    photo: false,
-  },
-  { name: "", title: "", branch: "", photo: false },
-];
-
-export type Sermon = {
-  title: string;
-  speaker: string;
-  series: string;
-  date: string;
-  scripture: string;
-};
-
-export const SERMONS: Sermon[] = [
-  {
-    title: "Rooted in the Vine",
-    speaker: "[PLACEHOLDER speaker]",
-    series: "Abiding Series",
-    date: "2026-08-09",
-    scripture: "John 15:1–8",
-  },
-  {
-    title: "The Weight of Glory",
-    speaker: "[PLACEHOLDER speaker]",
-    series: "Kingdom Foundations",
-    date: "2026-08-02",
-    scripture: "2 Corinthians 4:17",
-  },
-  {
-    title: "A House of Prayer",
-    speaker: "[PLACEHOLDER speaker]",
-    series: "Kingdom Foundations",
-    date: "2026-07-26",
-    scripture: "Isaiah 56:7",
+    photo: true,
+    photoUrl: prophetessPhoto.url,
   },
 ];
 

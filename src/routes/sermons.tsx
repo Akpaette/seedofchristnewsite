@@ -1,12 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
-import { Play } from "lucide-react";
-import { Btn, Display, Page, SectionHead } from "@/components/site/ui";
-import { SERMONS } from "@/lib/church-data";
+import { Smartphone } from "lucide-react";
+import { Beam, Display, Label } from "@/components/site/ui";
+import { APP_LINKS } from "@/lib/church-data";
+import googlePlayBadge from "@/assets/google-play.png.asset.json";
+import appStoreBadge from "@/assets/app-store.png.asset.json";
 
 const TITLE = "Sermons — Seed of Christ Golden Church Worldwide";
 const DESCRIPTION =
-  "Browse messages from Seed of Christ Golden Church Worldwide by series or date. Every message includes captions and a transcript.";
+  "Listen to church messages and join prayer sessions through the official Seed of Christ Golden Church App.";
 
 export const Route = createFileRoute("/sermons")({
   head: () => ({
@@ -23,76 +24,58 @@ export const Route = createFileRoute("/sermons")({
 });
 
 function SermonsPage() {
-  const [series, setSeries] = useState("All");
-  const [sort, setSort] = useState("newest");
-  const allSeries = ["All", ...new Set(SERMONS.map((s) => s.series))];
-
-  const filtered = useMemo(() => {
-    const list = series === "All" ? SERMONS : SERMONS.filter((s) => s.series === series);
-    return [...list].sort((a, b) =>
-      sort === "newest" ? b.date.localeCompare(a.date) : a.date.localeCompare(b.date),
-    );
-  }, [series, sort]);
-
   return (
-    <Page>
-      <SectionHead
-        as="h1"
-        label="Media library"
-        title="SERMONS"
-        sub="Filter by series, or sort by date. Every message includes captions and a transcript."
-      />
-      <div className="mb-8 flex flex-wrap gap-3">
-        <label className="sr-only" htmlFor="series">
-          Filter by series
-        </label>
-        <select
-          id="series"
-          value={series}
-          onChange={(e) => setSeries(e.target.value)}
-          className="border-ink border-2 px-3 py-2 text-sm font-semibold"
-        >
-          {allSeries.map((s) => (
-            <option key={s}>{s}</option>
-          ))}
-        </select>
-        <label className="sr-only" htmlFor="sort">
-          Sort order
-        </label>
-        <select
-          id="sort"
-          value={sort}
-          onChange={(e) => setSort(e.target.value)}
-          className="border-ink border-2 px-3 py-2 text-sm font-semibold"
-        >
-          <option value="newest">Newest first</option>
-          <option value="oldest">Oldest first</option>
-        </select>
-      </div>
-
-      <div className="space-y-3">
-        {filtered.map((s) => (
-          <div
-            key={s.title}
-            className="border-ink flex flex-col gap-3 border-2 p-5 sm:flex-row sm:items-center sm:justify-between"
-          >
-            <div>
-              <Display as="h2" className="text-xl">
-                {s.title.toUpperCase()}
-              </Display>
-              <div className="mt-1 text-xs opacity-70">
-                {s.speaker} · {s.series} · {s.scripture} · {s.date}
-              </div>
-              <div className="text-crimson mt-1 text-[11px] font-semibold">
-                Captions &amp; transcript available
-              </div>
-            </div>
-            <Btn tone="ghostDark" icon={Play}>
-              Watch
-            </Btn>
+    <main className="bg-indigo relative flex min-h-[68vh] items-center overflow-hidden px-4 py-16 md:px-8">
+      <Beam style={{ top: "22%", opacity: 0.11 }} />
+      <Beam style={{ bottom: "12%", opacity: 0.07 }} />
+      <div className="relative mx-auto w-full max-w-3xl text-center">
+        <Smartphone className="text-gold mx-auto mb-4" size={34} aria-hidden="true" />
+        <Label dark>Official Church App</Label>
+        <Display as="h1" className="text-5xl sm:text-6xl md:text-7xl" color="#F4F0E6">
+          LISTEN. PRAY. STAY CONNECTED.
+        </Display>
+        <p className="text-paper mx-auto mt-5 max-w-xl text-base leading-7 opacity-85 md:text-lg">
+          Access church messages and prayer sessions through the official Seed of Christ
+          Golden Church App.
+        </p>
+        <div className="border-gold/50 mt-9 border-t pt-7">
+          <p className="font-label text-gold mb-5 text-xs font-semibold uppercase">
+            Download the App
+          </p>
+          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <a
+              href={APP_LINKS.android}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Download the Seed of Christ Golden Church App on Google Play"
+              className="inline-flex min-h-12 items-center justify-center"
+            >
+              <img
+                src={googlePlayBadge.url}
+                alt="Get it on Google Play"
+                width="646"
+                height="250"
+                className="h-[60px] w-auto object-contain"
+              />
+            </a>
+            <a
+              href={APP_LINKS.ios}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Download the Seed of Christ Golden Church App on the App Store"
+              className="inline-flex min-h-12 items-center justify-center"
+            >
+              <img
+                src={appStoreBadge.url}
+                alt="Download on the App Store"
+                width="240"
+                height="80"
+                className="h-[60px] w-auto object-contain"
+              />
+            </a>
           </div>
-        ))}
+        </div>
       </div>
-    </Page>
+    </main>
   );
 }

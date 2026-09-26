@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Facebook, Youtube, Instagram, Radio as RadioIcon, Tv, Play, Smartphone, ExternalLink } from "lucide-react";
 import { Beam, Btn, Display, Label, Reveal, SectionHead, inputClass } from "@/components/site/ui";
 import { PhotoReel } from "@/components/site/PhotoReel";
-import { APP_LINKS, SERMONS } from "@/lib/church-data";
+import { APP_LINKS } from "@/lib/church-data";
 import apostlePhoto from "@/assets/apostle-mustapha.jpg.asset.json";
 
 const TITLE = "Seed of Christ Golden Church Worldwide — Ibadan to London";
@@ -95,39 +95,6 @@ function Index() {
         </div>
       </section>
 
-
-      <section className="mx-auto max-w-5xl px-4 py-16 md:px-8">
-        <Reveal>
-          <SectionHead label="Latest from us" title="RECENT MESSAGES" />
-          {SERMONS.length > 0 ? (
-            <div className="grid gap-5 md:grid-cols-3">
-              {SERMONS.slice(0, 3).map((s, i) => (
-                <Link
-                  key={s.title}
-                  to="/sermons"
-                  className={`border-ink block border-2 p-6 text-left transition hover:-translate-y-1 ${i === 0 ? "bg-ink" : "bg-porcelain"}`}
-                >
-                  <div className="font-label text-crimson mb-3 text-xs font-semibold tracking-wide uppercase">
-                    {s.series} · {s.date}
-                  </div>
-                  <Display as="h3" className="text-2xl" color={i === 0 ? "#F4F0E6" : "#17130F"}>
-                    {s.title.toUpperCase()}
-                  </Display>
-                  <div
-                    className={`mt-3 text-xs opacity-60 ${i === 0 ? "text-paper" : "text-charcoal"}`}
-                  >
-                    {s.speaker} · {s.scripture}
-                  </div>
-                </Link>
-              ))}
-            </div>
-          ) : (
-            <div className="border-ink text-charcoal border-2 p-10 text-center opacity-70">
-              Nothing posted yet — check back soon.
-            </div>
-          )}
-        </Reveal>
-      </section>
 
       <section className="bg-paper px-4 py-16 md:px-8">
         <div className="mx-auto max-w-5xl">
