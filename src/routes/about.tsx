@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
+import type { ReactNode } from "react";
 import { Display, Label, Page, SectionHead } from "@/components/site/ui";
 import { LEADERS } from "@/lib/church-data";
 
@@ -14,6 +15,8 @@ export const Route = createFileRoute("/about")({
       { name: "description", content: DESCRIPTION },
       { property: "og:title", content: TITLE },
       { property: "og:description", content: DESCRIPTION },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:url", content: "/about" },
     ],
     links: [{ rel: "canonical", href: "/about" }],
@@ -166,7 +169,7 @@ function AboutPage() {
   );
 }
 
-function HistoryBlock({ title, children }: { title: string; children: React.ReactNode }) {
+function HistoryBlock({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div className="border-gold border-t-4 pt-4">
       <Display as="h3" className="text-2xl">{title.toUpperCase()}</Display>
@@ -175,7 +178,7 @@ function HistoryBlock({ title, children }: { title: string; children: React.Reac
   );
 }
 
-function Belief({ title, children }: { title: string; children: React.ReactNode }) {
+function Belief({ title, children }: { title: string; children: ReactNode }) {
   return (
     <article className="border-line border-l-2 pl-5">
       <Display as="h3" className="text-2xl">{title.toUpperCase()}</Display>

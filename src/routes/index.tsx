@@ -1,10 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Facebook, Youtube, Instagram, Radio as RadioIcon, Tv, Play, Smartphone, ExternalLink } from "lucide-react";
+import { Facebook, Youtube, Instagram, Radio as RadioIcon, Tv, Play, Smartphone } from "lucide-react";
 import { Beam, Btn, Display, Label, Reveal, SectionHead, inputClass } from "@/components/site/ui";
 import { PhotoReel } from "@/components/site/PhotoReel";
 import { APP_LINKS } from "@/lib/church-data";
 import apostlePhoto from "@/assets/apostle-mustapha.jpg.asset.json";
+import googlePlayBadge from "@/assets/google-play.png.asset.json";
+import appStoreBadge from "@/assets/app-store.png.asset.json";
 
 const TITLE = "Seed of Christ Golden Church Worldwide — Ibadan to London";
 const DESCRIPTION =
@@ -17,6 +19,8 @@ export const Route = createFileRoute("/")({
       { name: "description", content: DESCRIPTION },
       { property: "og:title", content: TITLE },
       { property: "og:description", content: DESCRIPTION },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Index,
@@ -130,22 +134,30 @@ function Index() {
             sessions, and other church content directly from the Seed of Christ Golden
             Church App.
           </p>
-          <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
+          <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
             {[
-              { href: APP_LINKS.android, label: "Download on Android", store: "Google Play" },
-              { href: APP_LINKS.ios, label: "Download on iOS", store: "the App Store" },
+              {
+                href: APP_LINKS.android,
+                label: "Download the Seed of Christ Golden Church App on Google Play",
+                src: googlePlayBadge.url,
+                alt: "Get it on Google Play",
+              },
+              {
+                href: APP_LINKS.ios,
+                label: "Download the Seed of Christ Golden Church App on the App Store",
+                src: appStoreBadge.url,
+                alt: "Download on the App Store",
+              },
             ].map((a) => (
               <a
                 key={a.href}
                 href={a.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`${a.label} — opens ${a.store} in a new tab`}
-                className="bg-gold text-ink font-label inline-flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-bold tracking-wide uppercase transition-transform active:scale-95"
-                style={{ letterSpacing: "0.06em" }}
+                aria-label={a.label}
+                className="inline-flex min-h-12 items-center justify-center"
               >
-                {a.label}
-                <ExternalLink size={15} aria-hidden="true" />
+                <img src={a.src} alt={a.alt} className="h-[60px] w-auto object-contain" />
               </a>
             ))}
           </div>
