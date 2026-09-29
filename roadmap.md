@@ -1,9 +1,10 @@
 # Roadmap
 
-- [x] Keep only the two confirmed leadership profiles and use both portraits
-- [x] Replace History & Beliefs placeholders with supplied church history and beliefs
-- [x] Add the external staff-directory link
-- [x] Remove web sermon content and direct visitors to the official app
-- [x] Use official responsive app-store badges with exact links
-- [x] Add all three supplied worship photographs to the existing moving gallery
-- [x] Verify desktop, tablet, mobile, external destinations, and branch-filter integrity
+- [ ] Apply the selected Golden Editorial Prestige design system and shared navigation refresh
+- [ ] Redesign the homepage with existing confirmed content and photography
+- [ ] Add the Leaflet/OpenStreetMap branch map, verified coordinates, search, and map/list selection
+- [ ] Replace event data and add Africa/Lagos recurring countdowns
+- [ ] Populate Ministries and Bible College without unsupported details
+- [ ] Preserve leadership, history, Church App, and branch-directory integrity
+- [ ] Add framework-correct Netlify deployment configuration and documentation
+- [ ] Verify desktop, tablet, mobile, accessibility, recurrence logic, links, and build status
