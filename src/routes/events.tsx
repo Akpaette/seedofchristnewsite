@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
-import { Calendar as CalendarIcon, Check } from "lucide-react";
-import { Btn, Display, Page, SectionHead } from "@/components/site/ui";
-import { EVENTS, isPlaceholder } from "@/lib/church-data";
+import { CalendarDays, Clock3, MapPin } from "lucide-react";
+import { EventCountdown } from "@/components/site/EventCountdown";
+import { Display, Page, SectionHead } from "@/components/site/ui";
+import { EVENTS } from "@/lib/church-data";
 
 const TITLE = "Events — Seed of Christ Golden Church Worldwide";
 const DESCRIPTION =
@@ -25,53 +25,23 @@ export const Route = createFileRoute("/events")({
 });
 
 function EventsPage() {
-  const [rsvped, setRsvped] = useState<Record<string, boolean>>({});
-
   return (
-    <Page>
-      <SectionHead as="h1" label="What's coming up" title="EVENTS" />
-      <div className="space-y-3">
-        {EVENTS.map((e) => (
-          <div
-            key={e.name}
-            className="border-ink flex flex-col gap-3 border-2 p-5 sm:flex-row sm:items-center sm:justify-between"
-          >
-            <div className="flex items-center gap-3">
-              <CalendarIcon color="#C81E3A" size={20} />
-              <div>
-                <Display as="h2" className="text-lg">
-                  {e.name.toUpperCase()}
-                </Display>
-                <div className="text-xs opacity-70">
-                  {e.date} ·{" "}
-                  {isPlaceholder(e.location) ? (
-                    <span className="text-crimson font-semibold">{e.location}</span>
-                  ) : (
-                    e.location
-                  )}
-                </div>
-              </div>
-            </div>
-            {e.needsRsvp &&
-              (rsvped[e.name] ? (
-                <span className="text-crimson font-label flex items-center gap-1.5 text-xs font-bold uppercase">
-                  <Check size={14} /> RSVP received
-                </span>
-              ) : (
-                <Btn
-                  tone="crimson"
-                  onClick={() => setRsvped((prev) => ({ ...prev, [e.name]: true }))}
-                >
-                  RSVP
-                </Btn>
-              ))}
-          </div>
+    <Page className="max-w-6xl">
+      <SectionHead as="h1" label="Gather with us" title="Recurring Events" sub="Our regular gatherings across headquarters and branches. Countdowns follow West Africa Time." />
+      <div className="grid gap-px bg-line/25 md:grid-cols-2">
+        {EVENTS.map((event, index) => (
+          <article key={event.name} className="group bg-ink p-6 text-porcelain transition-colors hover:bg-ink2 md:p-8">
+            <div className="font-label mb-8 text-xs text-gold">{String(index + 1).padStart(2, "0")}</div>
+            <Display as="h2" className="text-3xl md:text-4xl" color="#F5F3EE">{event.name}</Display>
+            <dl className="mt-6 space-y-3 text-sm text-porcelain/70">
+              {event.location && <div className="flex gap-3"><MapPin className="mt-0.5 shrink-0 text-gold" size={16} /><div><dt className="sr-only">Location</dt><dd>{event.location}</dd></div></div>}
+              <div className="flex gap-3"><CalendarDays className="mt-0.5 shrink-0 text-gold" size={16} /><div><dt className="sr-only">Frequency</dt><dd>{event.frequency}</dd></div></div>
+              {event.schedule && <div className="flex gap-3"><Clock3 className="mt-0.5 shrink-0 text-gold" size={16} /><div><dt className="sr-only">Schedule</dt><dd>{event.schedule}</dd></div></div>}
+            </dl>
+            <EventCountdown kind={event.recurrence} exactTime={event.exactTime} />
+          </article>
         ))}
       </div>
-      <p className="border-crimson text-crimson font-label mt-8 border-2 border-dashed p-3 text-xs font-semibold uppercase">
-        ⚠ RSVPs are captured in the browser only — connect a backend before launch so
-        submissions reach the church office.
-      </p>
     </Page>
   );
 }

@@ -58,29 +58,64 @@ export const MINISTRIES: { name: string; blurb: string }[] = [
 
 export type ChurchEvent = {
   name: string;
-  date: string;
-  location: string;
-  needsRsvp: boolean;
+  location?: string;
+  schedule?: string;
+  frequency: string;
+  recurrence: import("./event-recurrence").RecurrenceKind;
+  exactTime: boolean;
 };
 
 export const EVENTS: ChurchEvent[] = [
   {
-    name: "Annual Convention",
-    date: "2026-09-14",
-    location: "Ibadan HQ",
-    needsRsvp: true,
+    name: "Monthly National Camp Meeting",
+    location: "National Camp Ground, Lufuape",
+    frequency: "Every last weekend of every month",
+    recurrence: "last-weekend",
+    exactTime: false,
   },
   {
-    name: "Youth Retreat",
-    date: "2026-09-27",
-    location: "[PLACEHOLDER venue]",
-    needsRsvp: true,
+    name: "Sunday Services",
+    location: "All Branches",
+    schedule: "8:00 AM WAT",
+    frequency: "Every Sunday",
+    recurrence: "sunday-8",
+    exactTime: true,
   },
   {
-    name: "Sunday Worship",
-    date: "2026-08-23",
-    location: "All branches",
-    needsRsvp: false,
+    name: "Power to Reign as Kings — Headquarters",
+    location: "Headquarters",
+    schedule: "Wednesdays",
+    frequency: "Weekly",
+    recurrence: "wednesday",
+    exactTime: false,
+  },
+  {
+    name: "Power to Reign as Kings — Other Branches",
+    location: "Other Branches",
+    schedule: "Thursdays",
+    frequency: "Weekly",
+    recurrence: "thursday",
+    exactTime: false,
+  },
+  {
+    name: "Monthly Bethesda Services",
+    frequency: "First 3 days of every month",
+    recurrence: "first-three-days",
+    exactTime: false,
+  },
+  {
+    name: "Monthly Vigil — Headquarters",
+    location: "Headquarters",
+    frequency: "Every first Friday of every month",
+    recurrence: "first-friday",
+    exactTime: false,
+  },
+  {
+    name: "Monthly Vigil — Igando",
+    location: "Igando Branch, Lagos State",
+    frequency: "Every second Friday of every month",
+    recurrence: "second-friday",
+    exactTime: false,
   },
 ];
 
