@@ -52,7 +52,7 @@ export function Beam({ style }: { style?: React.CSSProperties }) {
         height: "56px",
         left: "-30%",
         background:
-          "linear-gradient(90deg, transparent, #E7B23A 35%, #E7B23A 65%, transparent)",
+          "linear-gradient(90deg, transparent, var(--color-gold) 35%, var(--color-gold) 65%, transparent)",
         transform: "rotate(-7deg)",
         opacity: 0.14,
         pointerEvents: "none",
@@ -71,8 +71,7 @@ export function Label({
 }) {
   return (
     <div
-      className={`font-label mb-3 text-xs font-semibold uppercase ${dark ? "text-gold" : "text-crimson"}`}
-      style={{ letterSpacing: "0.18em" }}
+      className={`font-label mb-3 text-xs font-semibold uppercase ${dark ? "text-gold" : "text-golddeep"}`}
     >
       {children}
     </div>
@@ -92,8 +91,8 @@ export function Display({
 }) {
   return (
     <Tag
-      className={`font-display leading-[0.95] ${className}`}
-      style={{ color: color || "#17130F", letterSpacing: "0.01em" }}
+      className={`font-display leading-[1.05] ${className}`}
+      style={{ color: color || "var(--color-ink)" }}
     >
       {children}
     </Tag>
@@ -116,7 +115,7 @@ export function SectionHead({
   return (
     <div className="mb-9">
       {label && <Label dark={dark}>{label}</Label>}
-      <Display as={as} color={dark ? "#F4F0E6" : "#17130F"}>
+      <Display as={as} color={dark ? "var(--color-porcelain)" : "var(--color-ink)"}>
         {title}
       </Display>
       {sub && (
@@ -157,8 +156,7 @@ export function Btn({
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`font-label inline-flex items-center gap-2 px-6 py-3.5 text-sm font-bold tracking-wide uppercase transition-transform active:scale-95 disabled:opacity-50 ${TONES[tone]}`}
-      style={{ letterSpacing: "0.06em" }}
+      className={`font-label inline-flex min-h-12 items-center gap-2 px-6 py-3.5 text-xs font-bold uppercase transition-all hover:-translate-y-0.5 active:scale-95 disabled:opacity-50 ${TONES[tone]}`}
     >
       {children}
       <Icon size={15} />
@@ -191,9 +189,9 @@ export function Page({
   className?: string;
 }) {
   return (
-    <div className={`mx-auto px-4 py-16 md:px-8 ${className}`}>{children}</div>
+    <div className={`mx-auto px-5 py-20 md:px-8 md:py-28 ${className}`}>{children}</div>
   );
 }
 
 export const inputClass =
-  "w-full border-2 border-ink bg-transparent px-4 py-3 text-sm";
+  "w-full border border-line bg-transparent px-4 py-3 text-sm transition-colors focus:border-gold";
