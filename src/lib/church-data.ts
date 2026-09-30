@@ -62,6 +62,8 @@ export type ChurchEvent = {
   schedule?: string;
   frequency: string;
   recurrence: import("./event-recurrence").RecurrenceKind;
+  secondaryRecurrence?: import("./event-recurrence").RecurrenceKind;
+  secondarySchedule?: string;
   exactTime: boolean;
 };
 
@@ -82,19 +84,13 @@ export const EVENTS: ChurchEvent[] = [
     exactTime: true,
   },
   {
-    name: "Power to Reign as Kings — Headquarters",
-    location: "Headquarters",
-    schedule: "Wednesdays",
+    name: "Power to Reign as Kings",
+    location: "Headquarters: Wednesdays · Other branches: Thursdays",
+    schedule: "Headquarters — Wednesdays",
+    secondarySchedule: "Other branches — Thursdays",
     frequency: "Weekly",
     recurrence: "wednesday",
-    exactTime: false,
-  },
-  {
-    name: "Power to Reign as Kings — Other Branches",
-    location: "Other Branches",
-    schedule: "Thursdays",
-    frequency: "Weekly",
-    recurrence: "thursday",
+    secondaryRecurrence: "thursday",
     exactTime: false,
   },
   {

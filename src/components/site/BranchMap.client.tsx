@@ -4,12 +4,12 @@ import type { Branch } from "@/lib/branches-data";
 import { BRANCH_COORDINATES } from "@/lib/branch-coordinates";
 import "leaflet/dist/leaflet.css";
 
-function MapFocus({ branch }: { branch?: Branch }) {
+function MapFocus({ branch }: { branch: Branch | undefined }) {
   const map = useMap();
   useEffect(() => {
     if (!branch) return;
     const coordinates = BRANCH_COORDINATES[branch.name];
-    if (coordinates) map.flyTo(coordinates, branch.international ? 12 : 11, { duration: 0.8 });
+    if (coordinates) map.flyTo([...coordinates], branch.international ? 12 : 11, { duration: 0.8 });
   }, [branch, map]);
   return null;
 }
@@ -45,7 +45,7 @@ export default function BranchMapClient({ branches, selectedName, onSelect }: {
           return (
             <CircleMarker
               key={branch.name}
-              center={coordinates}
+              center={[...coordinates]}
               radius={active ? 10 : 7}
               pathOptions={{
                 color: active ? "#F5F3EE" : "#0D0D0D",
