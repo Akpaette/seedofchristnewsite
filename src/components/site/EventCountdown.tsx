@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { countdownParts, nextOccurrence, type RecurrenceKind } from "@/lib/event-recurrence";
 
-export function EventCountdown({ kind, exactTime }: { kind: RecurrenceKind; exactTime: boolean }) {
+export function EventCountdown({ kind, exactTime, label = "Next gathering" }: { kind: RecurrenceKind; exactTime: boolean; label?: string }) {
   const [now, setNow] = useState<Date | null>(null);
 
   useEffect(() => {
@@ -17,17 +17,17 @@ export function EventCountdown({ kind, exactTime }: { kind: RecurrenceKind; exac
   }, [kind, now]);
 
   const parts = countdown ?? { days: 0, hours: 0, minutes: 0, seconds: 0 };
-  const label = countdown
+  const accessibleLabel = countdown
     ? `${parts.days} days, ${parts.hours} hours, ${parts.minutes} minutes, ${parts.seconds} seconds until the next occurrence`
     : "Countdown loading";
 
   return (
     <div className="mt-7 border-t border-gold/25 pt-5">
       <div className="mb-3 flex items-center justify-between gap-3">
-        <span className="font-label text-[0.68rem] font-semibold uppercase text-gold">Next gathering</span>
+        <span className="font-label text-[0.68rem] font-semibold uppercase text-gold">{label}</span>
         {!exactTime && <span className="text-xs text-porcelain/55">Time not supplied</span>}
       </div>
-      <div className="grid grid-cols-4 gap-2" aria-label={label} aria-live="off">
+      <div className="grid grid-cols-4 gap-2" aria-label={accessibleLabel} aria-live="off">
         {([
           ["Days", parts.days],
           ["Hours", parts.hours],

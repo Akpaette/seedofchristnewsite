@@ -10,10 +10,8 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40">
-
-
-      <div className="bg-ink flex items-center justify-between px-4 py-3 md:px-8">
+    <header className="sticky top-0 z-40 border-b border-porcelain/10 bg-ink/95 backdrop-blur-xl">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-8">
         <Link to="/" className="flex items-center gap-2.5 text-left">
           <img
             src={logoAsset.url}
@@ -24,23 +22,22 @@ export default function Header() {
           />
           <div className="leading-tight">
             <div
-              className="font-display text-porcelain text-sm font-bold"
-              style={{ letterSpacing: "0.02em" }}
+              className="font-display max-w-48 text-[0.68rem] font-bold text-porcelain sm:max-w-none sm:text-xs"
             >
               SEED OF CHRIST GOLDEN CHURCH
             </div>
-            <div className="text-gold text-[10px] tracking-[0.2em]">WORLDWIDE</div>
+            <div className="font-label mt-1 text-[0.55rem] text-gold">WORLDWIDE</div>
           </div>
         </Link>
 
-        <nav className="hidden items-center gap-1 lg:flex">
+        <nav className="hidden items-center gap-0 xl:flex">
           {ITEMS.map((item) => (
             <Link
               key={item.to}
               to={item.to}
               activeOptions={{ exact: item.to === "/" }}
-              className="font-label text-porcelain px-3 py-2 text-xs font-semibold tracking-wide uppercase"
-              activeProps={{ className: "text-gold" }}
+              className="font-label border-b border-transparent px-2.5 py-3 text-[0.61rem] font-semibold uppercase text-porcelain/70 transition-colors hover:text-gold"
+              activeProps={{ className: "border-gold text-gold" }}
             >
               {item.label}
             </Link>
@@ -48,7 +45,7 @@ export default function Header() {
         </nav>
 
         <button
-          className="p-2 lg:hidden"
+          className="p-2 xl:hidden"
           aria-label={menuOpen ? "Close menu" : "Open menu"}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen(!menuOpen)}
@@ -58,14 +55,14 @@ export default function Header() {
       </div>
 
       {menuOpen && (
-        <nav className="bg-ink2 flex flex-col lg:hidden">
+        <nav className="flex max-h-[calc(100vh-4rem)] flex-col overflow-y-auto bg-ink2 xl:hidden">
           {ITEMS.map((item) => (
             <Link
               key={item.to}
               to={item.to}
               activeOptions={{ exact: item.to === "/" }}
               onClick={() => setMenuOpen(false)}
-              className="font-label text-porcelain border-b border-white/10 px-5 py-3.5 text-left text-sm font-semibold tracking-wide uppercase"
+              className="font-label border-b border-white/10 px-5 py-3.5 text-left text-xs font-semibold uppercase text-porcelain"
               activeProps={{ className: "text-gold" }}
             >
               {item.label}

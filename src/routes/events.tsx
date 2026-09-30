@@ -6,7 +6,7 @@ import { EVENTS } from "@/lib/church-data";
 
 const TITLE = "Events — Seed of Christ Golden Church Worldwide";
 const DESCRIPTION =
-  "Conventions, retreats and gatherings at Seed of Christ Golden Church Worldwide. RSVP for events across our Nigeria and London branches.";
+  "Recurring services, vigils and monthly gatherings at Seed of Christ Golden Church Worldwide, with live West Africa Time countdowns.";
 
 export const Route = createFileRoute("/events")({
   head: () => ({
@@ -38,7 +38,8 @@ function EventsPage() {
               <div className="flex gap-3"><CalendarDays className="mt-0.5 shrink-0 text-gold" size={16} /><div><dt className="sr-only">Frequency</dt><dd>{event.frequency}</dd></div></div>
               {event.schedule && <div className="flex gap-3"><Clock3 className="mt-0.5 shrink-0 text-gold" size={16} /><div><dt className="sr-only">Schedule</dt><dd>{event.schedule}</dd></div></div>}
             </dl>
-            <EventCountdown kind={event.recurrence} exactTime={event.exactTime} />
+            <EventCountdown kind={event.recurrence} exactTime={event.exactTime} label={event.secondaryRecurrence ? "Headquarters countdown" : "Next gathering"} />
+            {event.secondaryRecurrence && <EventCountdown kind={event.secondaryRecurrence} exactTime={false} label="Other branches countdown" />}
           </article>
         ))}
       </div>
