@@ -8,8 +8,8 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-ink text-paper px-4 pt-14 pb-24 md:px-8 lg:pb-10">
-      <div className="mx-auto grid max-w-5xl gap-8 text-sm md:grid-cols-4">
+    <footer className="border-t border-gold/20 bg-ink px-5 pt-20 pb-24 text-paper md:px-8 lg:pb-10">
+      <div className="mx-auto grid max-w-6xl gap-12 text-sm md:grid-cols-4">
         <div>
           <img
             src={logoAsset.url}
@@ -19,7 +19,7 @@ export default function Footer() {
             loading="lazy"
             className="mb-3 h-14 w-14 object-contain"
           />
-          <Display as="div" className="text-2xl" color="#E7B23A">
+          <Display as="div" className="text-xl" color="var(--color-gold)">
             SEED OF CHRIST GOLDEN CHURCH
           </Display>
           <p className="mt-2 text-xs leading-relaxed opacity-60">

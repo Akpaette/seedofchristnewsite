@@ -1,10 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Facebook, Youtube, Instagram, Radio as RadioIcon, Tv, Play, Smartphone } from "lucide-react";
-import { Beam, Btn, Display, Label, Reveal, SectionHead, inputClass } from "@/components/site/ui";
+import { Facebook, Youtube, Instagram, Radio as RadioIcon, Tv, Play, Smartphone, ArrowDown } from "lucide-react";
+import { Btn, Display, Label, Reveal, SectionHead, inputClass } from "@/components/site/ui";
 import { PhotoReel } from "@/components/site/PhotoReel";
 import { APP_LINKS } from "@/lib/church-data";
 import apostlePhoto from "@/assets/apostle-mustapha.jpg.asset.json";
+import heroPhoto from "@/assets/church-worship-0047.jpg.asset.json";
 import googlePlayBadge from "@/assets/google-play.png.asset.json";
 import appStoreBadge from "@/assets/app-store.png.asset.json";
 
@@ -40,19 +41,19 @@ function Index() {
 
   return (
     <>
-      <section className="bg-ink relative overflow-hidden px-4 pt-16 pb-20 md:px-8">
-        <Beam style={{ top: "18%" }} />
-        <Beam style={{ top: "62%", opacity: 0.08 }} />
-        <div className="relative mx-auto max-w-4xl text-center">
-          <Label dark>Ibadan · Sango Ota · Ilesha · London/Enfield · Worldwide</Label>
-          <Display as="h1" className="text-6xl sm:text-7xl md:text-8xl" color="#F4F0E6">
-            A GOLDEN <span className="text-gold">GENERATION</span> OF FAITH
+      <section className="relative flex min-h-[calc(100svh-4rem)] flex-col justify-center overflow-hidden bg-ink px-5 py-20 md:px-8">
+        <img src={heroPhoto.url} alt="Worshippers gathered across the Seed of Christ Golden Church auditorium" className="absolute inset-0 h-full w-full object-cover opacity-35 grayscale" />
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/80 via-ink/55 to-ink" />
+        <div className="relative mx-auto w-full max-w-7xl text-center">
+          <Label dark>Official website · Ibadan, Nigeria · Worldwide</Label>
+          <Display as="h1" className="mx-auto mt-6 max-w-6xl text-5xl sm:text-7xl md:text-8xl lg:text-9xl" color="var(--color-porcelain)">
+            Seed <em className="font-normal text-gold">of</em> Christ<br /><span className="mt-3 block text-3xl sm:text-5xl md:text-6xl">Golden Church Worldwide</span>
           </Display>
-          <p className="text-paper mx-auto mt-6 max-w-xl text-lg opacity-75">
-            “Go ye into all the world, and preach the gospel to every creature.” — Mark
-            16:15
-          </p>
-          <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+          <div className="mx-auto mt-10 max-w-2xl border-t border-gold/35 pt-8">
+            <p className="text-paper mx-auto max-w-xl text-base leading-8 opacity-80 md:text-lg">
+              The Land of Reality — an evangelistic and teaching ministry rooted in God's Word and the work of the Holy Spirit.
+            </p>
+          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <Link to="/branches">
               <Btn tone="gold">Plan a Visit</Btn>
             </Link>
@@ -61,38 +62,40 @@ function Index() {
                 Watch Live
               </Btn>
             </Link>
-          </div>
+          </div></div>
         </div>
-
-        <PhotoReel />
+        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 text-gold"><ArrowDown size={20} aria-hidden="true" /></div>
       </section>
 
-      <section className="bg-porcelain relative overflow-hidden px-4 py-16 md:px-8">
-        <Beam style={{ top: "8%", opacity: 0.1 }} />
-        <div className="relative mx-auto grid max-w-5xl items-center gap-8 md:grid-cols-[minmax(0,320px)_1fr]">
+      <section className="bg-ink px-5 pb-20 md:px-8"><div className="mx-auto max-w-7xl"><div className="mb-5 flex items-end justify-between gap-4 border-b border-porcelain/15 pb-4"><div><Label dark>Church life</Label><p className="text-sm text-porcelain/55">Worship, fellowship and mission</p></div></div><PhotoReel /></div></section>
+
+      <section className="relative overflow-hidden bg-ink px-5 py-24 text-porcelain md:px-8 md:py-36">
+        <div className="relative mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-[minmax(0,420px)_1fr] md:gap-20">
+          <div className="relative before:absolute before:-top-4 before:-left-4 before:h-full before:w-full before:border before:border-gold/30">
           <img
             src={apostlePhoto.url}
             alt="Apostle Dr. S.M.O. Mustapha JP, General Overseer of Seed of Christ Golden Church Worldwide, in red ministerial vestments"
             loading="lazy"
             decoding="async"
-            className="border-ink w-full border-2 object-cover"
+            className="relative aspect-[4/5] w-full object-cover object-top grayscale transition duration-700 hover:grayscale-0"
           />
+          </div>
           <div>
-            <Label>Our General Overseer</Label>
-            <Display as="h2" className="text-4xl md:text-5xl">
-              APOSTLE DR. S.M.O. MUSTAPHA JP
+            <Label dark>Our General Overseer</Label>
+            <Display as="h2" className="text-4xl md:text-6xl" color="var(--color-porcelain)">
+              Apostle Dr. S.M.O. Mustapha JP
             </Display>
-            <p className="font-label mt-2 text-xs uppercase opacity-60">
+            <p className="font-label mt-3 text-xs uppercase text-gold">
               Also known as Baba Sebioba · with Prophetess Eunice Mustapha (Mama
               Sebioba), Mother in Israel
             </p>
-            <p className="mt-4 max-w-lg text-base opacity-75">
+            <p className="mt-6 max-w-lg text-base leading-8 text-porcelain/65">
               Shepherding the church from the Ibadan headquarters to branches across
               Nigeria and the United Kingdom.
             </p>
             <div className="mt-6">
               <Link to="/about">
-                <Btn tone="ghostDark">Meet our leaders</Btn>
+                <Btn tone="ghost">Meet our leaders</Btn>
               </Link>
             </div>
           </div>
@@ -100,7 +103,7 @@ function Index() {
       </section>
 
 
-      <section className="bg-paper px-4 py-16 md:px-8">
+      <section className="bg-porcelain px-5 py-24 md:px-8">
         <div className="mx-auto max-w-5xl">
           <Reveal>
             <SectionHead label="Stay in the loop" title="MEDIA & MINISTRY" />
@@ -121,12 +124,11 @@ function Index() {
         </div>
       </section>
 
-      <section aria-labelledby="app-heading" className="bg-indigo relative overflow-hidden px-4 py-16 md:px-8">
-        <Beam style={{ top: "40%", opacity: 0.1 }} />
+      <section aria-labelledby="app-heading" className="relative overflow-hidden bg-ink2 px-5 py-24 md:px-8">
         <div className="relative mx-auto max-w-3xl text-center">
           <Smartphone size={28} color="#E7B23A" className="mx-auto mb-3" aria-hidden="true" />
           <Label dark>Official mobile app</Label>
-          <Display as="h2" className="text-4xl md:text-5xl" color="#F4F0E6">
+          <Display as="h2" className="text-4xl md:text-5xl" color="var(--color-porcelain)">
             <span id="app-heading">SEED OF CHRIST GOLDEN CHURCH APP</span>
           </Display>
           <p className="text-porcelain mx-auto mt-4 max-w-xl opacity-80">
@@ -201,17 +203,16 @@ function Index() {
         </Reveal>
       </section>
 
-      <section className="bg-crimson relative overflow-hidden px-4 py-20 md:px-8">
-        <Beam style={{ top: "30%", opacity: 0.12 }} />
+      <section className="relative overflow-hidden bg-gold px-5 py-24 md:px-8">
         <div className="relative mx-auto max-w-xl text-center">
-          <Display className="text-4xl md:text-5xl" color="#F4F0E6">
+          <Display className="text-4xl md:text-5xl" color="var(--color-ink)">
             QUESTION? PRAYER REQUEST?
           </Display>
-          <p className="text-porcelain my-5 opacity-85">
+          <p className="my-5 text-ink/75">
             We would love to hear from you and stand with you in prayer.
           </p>
           <Link to="/prayer">
-            <Btn tone="ghost">Send a Prayer Request</Btn>
+            <Btn tone="ghostDark">Send a Prayer Request</Btn>
           </Link>
         </div>
       </section>

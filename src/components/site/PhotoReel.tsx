@@ -34,14 +34,14 @@ export function PhotoReel() {
   const loop = [...PHOTOS, ...PHOTOS];
 
   return (
-    <div className="relative mx-auto mt-16 max-w-6xl">
+    <div className="relative mx-auto max-w-7xl">
       <div className="photo-reel overflow-hidden pb-2" data-paused={paused || undefined}>
         <ul className="photo-reel-track flex w-max gap-3">
           {loop.map((p, i) => (
             <li
               key={i}
               aria-hidden={i >= PHOTOS.length || undefined}
-              className="border-gold/40 aspect-[4/5] w-[70vw] shrink-0 overflow-hidden border-2 sm:w-[280px]"
+              className="aspect-[4/5] w-[70vw] shrink-0 overflow-hidden border border-gold/25 sm:w-[280px]"
             >
               <img
                 src={p.src}

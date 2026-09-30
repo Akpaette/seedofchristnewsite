@@ -12,14 +12,14 @@ export default function BottomTabs() {
   return (
     <nav
       aria-label="Quick navigation"
-      className="bg-ink border-gold fixed bottom-0 left-0 right-0 z-40 flex items-stretch border-t-2 lg:hidden"
+      className="fixed right-0 bottom-0 left-0 z-40 flex items-stretch border-t border-gold/40 bg-ink/95 backdrop-blur-xl lg:hidden"
     >
       {TABS.map(({ to, label, icon: Icon }) => (
         <Link
           key={to}
           to={to}
           activeOptions={{ exact: to === "/" }}
-          className="font-label text-porcelain flex flex-1 flex-col items-center gap-1 py-2.5 text-[10px] font-semibold uppercase"
+          className="font-label flex min-h-14 flex-1 flex-col items-center justify-center gap-1 py-2 text-[0.56rem] font-semibold uppercase text-porcelain/70"
           activeProps={{ className: "text-gold" }}
         >
           <Icon size={19} />
