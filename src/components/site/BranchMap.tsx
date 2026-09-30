@@ -1,7 +1,7 @@
 import { useEffect, useState, type ComponentType } from "react";
 import type { Branch } from "@/lib/branches-data";
 
-type Props = { branches: Branch[]; selectedName?: string; onSelect: (name: string) => void };
+type Props = { branches: Branch[]; selectedName: string | undefined; onSelect: (name: string) => void };
 
 export function BranchMap(props: Props) {
   const [Map, setMap] = useState<ComponentType<Props> | null>(null);

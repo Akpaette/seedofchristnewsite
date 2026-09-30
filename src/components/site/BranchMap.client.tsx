@@ -16,7 +16,7 @@ function MapFocus({ branch }: { branch: Branch | undefined }) {
 
 export default function BranchMapClient({ branches, selectedName, onSelect }: {
   branches: Branch[];
-  selectedName?: string;
+  selectedName: string | undefined;
   onSelect: (name: string) => void;
 }) {
   const mapped = branches.filter((branch) => BRANCH_COORDINATES[branch.name]);
