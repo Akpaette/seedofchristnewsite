@@ -37,7 +37,7 @@ function BibleCollegePage() {
         </div>
         <div className="p-7 md:p-12">
           <Label dark>A place to be grounded</Label>
-          <Display as="h2" className="text-3xl md:text-5xl" color="#F5F3EE">Rooted in the Word</Display>
+          <Display as="h2" className="text-3xl md:text-5xl" color="var(--color-porcelain)">Rooted in the Word</Display>
           <div className="mt-6 space-y-5 leading-8 text-porcelain/70">
             <p>The Bible College reflects the ministry's established commitment to biblical teaching and spiritual development through the knowledge of God's Word.</p>
             <p>It is presented as a place for serious Christian learning and discipleship, encouraging believers to grow in understanding, faith, and faithful service.</p>

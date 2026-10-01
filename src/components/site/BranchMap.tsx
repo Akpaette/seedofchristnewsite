@@ -1,13 +1,15 @@
 import { useEffect, useState, type ComponentType } from "react";
+import { createClientOnlyFn } from "@tanstack/react-start";
 import type { Branch } from "@/lib/branches-data";
 
 type Props = { branches: Branch[]; selectedName: string | undefined; onSelect: (name: string) => void };
+const loadBranchMap = createClientOnlyFn(() => import("./BranchMap.client"));
 
 export function BranchMap(props: Props) {
   const [Map, setMap] = useState<ComponentType<Props> | null>(null);
   useEffect(() => {
     let active = true;
-    void import("./BranchMap.client").then((module) => {
+    void loadBranchMap().then((module) => {
       if (active) setMap(() => module.default);
     });
     return () => { active = false; };
