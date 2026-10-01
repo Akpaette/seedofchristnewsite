@@ -1,0 +1,10 @@
+[build]
+  command = "bun run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+  BUN_VERSION = "1.2.23"
+
+# Nitro generates the Netlify Function and routing rules during the build.
+# Do not add a root rewrite here; it would override TanStack Start routes.
