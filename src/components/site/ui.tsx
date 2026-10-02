@@ -143,6 +143,8 @@ export function Btn({
   icon: Icon = ArrowUpRight,
   type = "button",
   disabled,
+  ariaExpanded,
+  ariaControls,
 }: {
   children: ReactNode;
   onClick?: (() => void) | undefined;
@@ -150,12 +152,16 @@ export function Btn({
   icon?: LucideIcon;
   type?: "button" | "submit";
   disabled?: boolean | undefined;
+  ariaExpanded?: boolean | undefined;
+  ariaControls?: string | undefined;
 }) {
   return (
     <button
       type={type}
       onClick={onClick}
       disabled={disabled}
+      aria-expanded={ariaExpanded}
+      aria-controls={ariaControls}
       className={`font-label inline-flex min-h-12 items-center gap-2 px-6 py-3.5 text-xs font-bold uppercase transition-all hover:-translate-y-0.5 active:scale-95 disabled:opacity-50 ${TONES[tone]}`}
     >
       {children}

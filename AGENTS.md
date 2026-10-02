@@ -12,3 +12,4 @@
 - Keep website message and prayer-session content in the official Church App rather than duplicating it on web pages, because the app is the maintained media destination.
 - Use Leaflet with OpenStreetMap and verified locality coordinates for branch mapping; this avoids browser secrets and prevents invented precise locations.
 - Target self-hosted production builds through Nitro's Netlify preset; this preserves TanStack Start server rendering and file-based routes.
+- Store testimony submissions in Lovable Cloud with public reads limited to published records; this preserves moderation and keeps contact details private.

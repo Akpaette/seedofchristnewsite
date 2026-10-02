@@ -17,6 +17,29 @@ export const APP_LINKS = {
   ios: "https://apps.apple.com/us/app/seed-of-christ-golden-church/id6797294392",
 };
 
+export const SOCIAL_LINKS = {
+  facebook: {
+    name: "Facebook",
+    handle: "Baba Sebioba",
+    href: "https://facebook.com/BABASEBIOBA",
+  },
+  instagram: {
+    name: "Instagram",
+    handle: "@babasebiobaofficial",
+    href: "https://instagram.com/babasebiobaofficial",
+  },
+  youtube: {
+    name: "YouTube",
+    handle: "BabaSebioba TV",
+    href: "https://youtube.com/@babasebiobatv",
+  },
+  tiktok: {
+    name: "TikTok",
+    handle: "@babasebioba1",
+    href: "https://tiktok.com/@babasebioba1",
+  },
+} as const;
+
 export type Leader = {
   name: string;
   title: string;
@@ -124,11 +147,11 @@ export const NAV_PRIMARY = [
 
 export const NAV_MORE = [
   { to: "/about", label: "About" },
+  { to: "/testimonies", label: "Testimonies" },
   { to: "/sermons", label: "Sermons" },
   { to: "/ministries", label: "Ministries" },
   { to: "/branches", label: "Branches" },
   { to: "/bible-college", label: "Bible College" },
-  { to: "/radio", label: "Radio" },
   { to: "/contact", label: "Contact" },
 ] as const;
 
