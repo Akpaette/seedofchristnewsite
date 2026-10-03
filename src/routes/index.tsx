@@ -101,7 +101,7 @@ function Index() {
 
       <section aria-labelledby="app-heading" className="relative overflow-hidden bg-ink2 px-5 py-24 md:px-8">
         <div className="relative mx-auto max-w-3xl text-center">
-          <Smartphone size={28} color="#E7B23A" className="mx-auto mb-3" aria-hidden="true" />
+          <Smartphone size={28} className="mx-auto mb-3 text-gold" aria-hidden="true" />
           <Label dark>Official mobile app</Label>
           <Display as="h2" className="text-4xl md:text-5xl" color="var(--color-porcelain)">
             <span id="app-heading">SEED OF CHRIST GOLDEN CHURCH APP</span>

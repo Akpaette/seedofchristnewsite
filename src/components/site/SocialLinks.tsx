@@ -17,7 +17,7 @@ export function SocialLinks({ showLabels = false }: { showLabels?: boolean }) {
           href={href}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={`Follow ${name} on ${name}`}
+          aria-label={`Open the official ${name} account, ${handle}`}
           className="inline-flex min-h-11 items-center gap-2 border border-porcelain/25 px-3 text-porcelain/80 transition-colors hover:border-gold hover:text-gold"
         >
           <Icon size={18} aria-hidden="true" />
