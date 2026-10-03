@@ -22,6 +22,7 @@ import { Route as RadioRouteImport } from './routes/radio'
 import { Route as SermonsRouteImport } from './routes/sermons'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TestimoniesRouteImport } from './routes/testimonies'
+import { Route as TestimoniesIdRouteImport } from './routes/testimonies.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -88,6 +89,11 @@ const TestimoniesRoute = TestimoniesRouteImport.update({
   path: '/testimonies',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TestimoniesIdRoute = TestimoniesIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => TestimoniesRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -102,7 +108,8 @@ export interface FileRoutesByFullPath {
   '/radio': typeof RadioRoute
   '/sermons': typeof SermonsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/testimonies': typeof TestimoniesRoute
+  '/testimonies': typeof TestimoniesRouteWithChildren
+  '/testimonies/$id': typeof TestimoniesIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -117,7 +124,8 @@ export interface FileRoutesByTo {
   '/radio': typeof RadioRoute
   '/sermons': typeof SermonsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/testimonies': typeof TestimoniesRoute
+  '/testimonies': typeof TestimoniesRouteWithChildren
+  '/testimonies/$id': typeof TestimoniesIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -133,7 +141,8 @@ export interface FileRoutesById {
   '/radio': typeof RadioRoute
   '/sermons': typeof SermonsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/testimonies': typeof TestimoniesRoute
+  '/testimonies': typeof TestimoniesRouteWithChildren
+  '/testimonies/$id': typeof TestimoniesIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -151,6 +160,7 @@ export interface FileRouteTypes {
     | '/sermons'
     | '/sitemap.xml'
     | '/testimonies'
+    | '/testimonies/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -166,6 +176,7 @@ export interface FileRouteTypes {
     | '/sermons'
     | '/sitemap.xml'
     | '/testimonies'
+    | '/testimonies/$id'
   id:
     | '__root__'
     | '/'
@@ -181,6 +192,7 @@ export interface FileRouteTypes {
     | '/sermons'
     | '/sitemap.xml'
     | '/testimonies'
+    | '/testimonies/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -196,7 +208,7 @@ export interface RootRouteChildren {
   RadioRoute: typeof RadioRoute
   SermonsRoute: typeof SermonsRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
-  TestimoniesRoute: typeof TestimoniesRoute
+  TestimoniesRoute: typeof TestimoniesRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -292,8 +304,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TestimoniesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/testimonies/$id': {
+      id: '/testimonies/$id'
+      path: '/$id'
+      fullPath: '/testimonies/$id'
+      preLoaderRoute: typeof TestimoniesIdRouteImport
+      parentRoute: typeof TestimoniesRoute
+    }
   }
 }
+
+interface TestimoniesRouteChildren {
+  TestimoniesIdRoute: typeof TestimoniesIdRoute
+}
+
+const TestimoniesRouteChildren: TestimoniesRouteChildren = {
+  TestimoniesIdRoute: TestimoniesIdRoute,
+}
+
+const TestimoniesRouteWithChildren = TestimoniesRoute._addFileChildren(
+  TestimoniesRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -308,7 +339,7 @@ const rootRouteChildren: RootRouteChildren = {
   RadioRoute: RadioRoute,
   SermonsRoute: SermonsRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
-  TestimoniesRoute: TestimoniesRoute,
+  TestimoniesRoute: TestimoniesRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

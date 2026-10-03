@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Mail, MapPin, Phone, Send } from "lucide-react";
 import { Btn, Page, PlaceholderNote, SectionHead, inputClass } from "@/components/site/ui";
 import { submitChurchForm, type SubmitResult } from "@/lib/forms.functions";
+import { SocialLinks } from "@/components/site/SocialLinks";
 
 const TITLE = "Contact — Seed of Christ Golden Church Worldwide";
 const DESCRIPTION =
@@ -156,6 +157,10 @@ function ContactPage() {
             ))}
         </form>
       </div>
+      <section className="mt-14 bg-ink p-6 text-porcelain md:p-8" aria-labelledby="contact-social-heading">
+        <h2 id="contact-social-heading" className="font-label mb-5 text-xs font-bold uppercase text-gold">Official social channels</h2>
+        <SocialLinks showLabels />
+      </section>
     </Page>
   );
 }
