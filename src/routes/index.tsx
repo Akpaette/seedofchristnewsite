@@ -1,13 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Facebook, Youtube, Instagram, Radio as RadioIcon, Tv, Play, Smartphone, ArrowDown } from "lucide-react";
+import { Smartphone, ArrowDown } from "lucide-react";
 import { Btn, Display, Label, Reveal, SectionHead, inputClass } from "@/components/site/ui";
 import { PhotoReel } from "@/components/site/PhotoReel";
-import { APP_LINKS } from "@/lib/church-data";
+import { AppBadges, DeviceAwareAppButton } from "@/components/site/AppBadges";
+import { SocialLinks } from "@/components/site/SocialLinks";
 import apostlePhoto from "@/assets/apostle-mustapha.jpg.asset.json";
 import heroPhoto from "@/assets/church-worship-0047.jpg.asset.json";
-import googlePlayBadge from "@/assets/google-play.png.asset.json";
-import appStoreBadge from "@/assets/app-store.png.asset.json";
 
 const TITLE = "Seed of Christ Golden Church Worldwide — Ibadan to London";
 const DESCRIPTION =
@@ -27,14 +26,6 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-
-const CHANNELS = [
-  { icon: Facebook, label: "Facebook" },
-  { icon: Youtube, label: "YouTube" },
-  { icon: Instagram, label: "Instagram" },
-  { icon: RadioIcon, label: "Radio" },
-  { icon: Tv, label: "Sebioba Royal TV" },
-];
 
 function Index() {
   const [signedUp, setSignedUp] = useState(false);
@@ -57,11 +48,7 @@ function Index() {
             <Link to="/branches">
               <Btn tone="gold">Plan a Visit</Btn>
             </Link>
-            <Link to="/radio">
-              <Btn tone="ghost" icon={Play}>
-                Watch Live
-              </Btn>
-            </Link>
+            <DeviceAwareAppButton>Watch Live on the App</DeviceAwareAppButton>
           </div></div>
         </div>
         <div className="absolute bottom-5 left-1/2 -translate-x-1/2 text-gold"><ArrowDown size={20} aria-hidden="true" /></div>
@@ -107,26 +94,14 @@ function Index() {
         <div className="mx-auto max-w-5xl">
           <Reveal>
             <SectionHead label="Stay in the loop" title="MEDIA & MINISTRY" />
-            <div className="grid grid-cols-2 gap-3 md:grid-cols-5">
-              {CHANNELS.map(({ icon: Icon, label }) => (
-                <div
-                  key={label}
-                  className="bg-ink border-ink flex flex-col items-center gap-2 border-2 p-5 text-center"
-                >
-                  <Icon size={22} color="#E7B23A" />
-                  <span className="font-label text-porcelain text-xs font-semibold tracking-wide uppercase">
-                    {label}
-                  </span>
-                </div>
-              ))}
-            </div>
+            <div className="bg-ink p-6 md:p-8"><SocialLinks showLabels /></div>
           </Reveal>
         </div>
       </section>
 
       <section aria-labelledby="app-heading" className="relative overflow-hidden bg-ink2 px-5 py-24 md:px-8">
         <div className="relative mx-auto max-w-3xl text-center">
-          <Smartphone size={28} color="#E7B23A" className="mx-auto mb-3" aria-hidden="true" />
+          <Smartphone size={28} className="mx-auto mb-3 text-gold" aria-hidden="true" />
           <Label dark>Official mobile app</Label>
           <Display as="h2" className="text-4xl md:text-5xl" color="var(--color-porcelain)">
             <span id="app-heading">SEED OF CHRIST GOLDEN CHURCH APP</span>
@@ -136,33 +111,7 @@ function Index() {
             sessions, and other church content directly from the Seed of Christ Golden
             Church App.
           </p>
-          <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            {[
-              {
-                href: APP_LINKS.android,
-                label: "Download the Seed of Christ Golden Church App on Google Play",
-                src: googlePlayBadge.url,
-                alt: "Get it on Google Play",
-              },
-              {
-                href: APP_LINKS.ios,
-                label: "Download the Seed of Christ Golden Church App on the App Store",
-                src: appStoreBadge.url,
-                alt: "Download on the App Store",
-              },
-            ].map((a) => (
-              <a
-                key={a.href}
-                href={a.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={a.label}
-                className="inline-flex min-h-12 items-center justify-center"
-              >
-                <img src={a.src} alt={a.alt} className="h-[60px] w-auto object-contain" />
-              </a>
-            ))}
-          </div>
+          <AppBadges className="mt-8" />
         </div>
       </section>
 

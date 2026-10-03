@@ -24,7 +24,7 @@ Voice: confident, warm, scripture-grounded — not corporate,
 not stiff
 What's already built — don't rebuild these, extend them
 Nav: Home, Events, Give, Prayer (primary) / About, Sermons,
-Ministries, Branches, Bible College, Radio, Contact (secondary).
+Ministries, Branches, Bible College, Testimonies, Contact (secondary).
 Sticky header with a service-time strip, mobile bottom tab bar,
 footer with service times and social links. Sermons page already
 has working series-filter and date-sort. Leadership cards already
@@ -39,9 +39,8 @@ flagged in the same style as the existing leadership-card
 pattern — never invent a plausible-sounding fake to fill a gap.
 2. Wire the stubbed integrations the README calls out:
 Formspree or Resend for the Prayer Request / Contact /
-Newsletter forms; Paystack and Flutterwave for Give, with a
-bank-transfer panel kept as a fallback for members who prefer
-it; Google Maps Embed API or Mapbox for the Branches page.
+Newsletter forms; the confirmed bank-transfer channels for Give;
+and the keyless OpenStreetMap branch directory.
 3. Accessibility pass: alt text on every image, visible focus states
 (partially in place already — finish it), full keyboard navigation
 through the mobile menu, captions/transcripts for any
@@ -72,15 +71,12 @@ currently says Sunday 8:00 AM & 10:30 AM, but the church's
 current live site says Sunday 9:00 AM (WAT). Confirm the real,
 current time with the client before shipping — don't guess
 which is right.
-Media presence: Facebook, YouTube, Instagram, a Radio
-stream, and a 24-hour TV channel ("Sebioba Royal TV," Free-to-
-Air)
+Media presence: Facebook, YouTube, Instagram and TikTok.
 There is a Bible College — "Seed of Christ Golden Church Land
 of Reality Worldwide Bible College," Ibadan — give it a real
 page, not just a nav placeholder
-Giving: Zenith Bank (the account number currently in
-pages.jsx is a placeholder — get the real one before launch,
-never invent one)
+Giving: official First Bank and Zenith Bank transfer details are
+published on the Give page.
 Still needed from the client — ask, don't guess or
 substitute stock art
 Official logo file (vector/SVG or a high-resolution PNG with a
@@ -97,8 +93,8 @@ Sermon library: real speaker names, audio/video files or
 embed links, and whether transcripts already exist
 A paragraph description for each ministry (Men's, Women's,
 Youth, Children's, Choir & Music, Ushering & Protocol, Media)
-Live bank account details for Give, plus Paystack/Flutterwave
-merchant credentials once the church sets those accounts up
+Any future online giving provider must be separately confirmed
+before it is added.
 Guardrails
 Don't invent quotes, statistics, or biographical detail for real
 people — leave it clearly flagged instead, matching the existing

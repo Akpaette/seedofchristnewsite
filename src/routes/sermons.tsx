@@ -1,9 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Smartphone } from "lucide-react";
 import { Beam, Display, Label } from "@/components/site/ui";
-import { APP_LINKS } from "@/lib/church-data";
-import googlePlayBadge from "@/assets/google-play.png.asset.json";
-import appStoreBadge from "@/assets/app-store.png.asset.json";
+import { AppBadges } from "@/components/site/AppBadges";
 
 const TITLE = "Sermons — Seed of Christ Golden Church Worldwide";
 const DESCRIPTION =
@@ -44,38 +42,7 @@ function SermonsPage() {
           <p className="font-label text-gold mb-5 text-xs font-semibold uppercase">
             Download the App
           </p>
-          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <a
-              href={APP_LINKS.android}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Download the Seed of Christ Golden Church App on Google Play"
-              className="inline-flex min-h-12 items-center justify-center"
-            >
-              <img
-                src={googlePlayBadge.url}
-                alt="Get it on Google Play"
-                width="646"
-                height="250"
-                className="h-[60px] w-auto object-contain"
-              />
-            </a>
-            <a
-              href={APP_LINKS.ios}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Download the Seed of Christ Golden Church App on the App Store"
-              className="inline-flex min-h-12 items-center justify-center"
-            >
-              <img
-                src={appStoreBadge.url}
-                alt="Download on the App Store"
-                width="240"
-                height="80"
-                className="h-[60px] w-auto object-contain"
-              />
-            </a>
-          </div>
+          <AppBadges />
         </div>
       </div>
     </main>

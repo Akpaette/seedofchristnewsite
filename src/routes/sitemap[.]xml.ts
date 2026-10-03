@@ -8,7 +8,7 @@ const PATHS = [
   "/ministries",
   "/branches",
   "/bible-college",
-  "/radio",
+  "/testimonies",
   "/give",
   "/prayer",
   "/contact",

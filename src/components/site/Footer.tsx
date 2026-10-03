@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { Facebook, Youtube, Instagram, Radio as RadioIcon, Tv } from "lucide-react";
 import { NAV_MORE } from "@/lib/church-data";
 import { Display } from "./ui";
+import { SocialLinks } from "./SocialLinks";
 import logoAsset from "@/assets/church-logo.jpg.asset.json";
 
 export default function Footer() {
@@ -33,6 +33,7 @@ export default function Footer() {
             Explore
           </div>
           <ul className="space-y-1.5 opacity-80">
+            <li><Link to="/give" className="hover:underline">Give</Link></li>
             {NAV_MORE.map((i) => (
               <li key={i.to}>
                 <Link to={i.to} className="hover:underline">
@@ -64,19 +65,8 @@ export default function Footer() {
           <div className="text-gold font-label mb-2 text-xs font-semibold tracking-wider uppercase">
             Follow along
           </div>
-          <div className="flex gap-3">
-            <Facebook size={18} />
-            <Youtube size={18} />
-            <Instagram size={18} />
-            <RadioIcon size={18} />
-            <Tv size={18} />
-          </div>
-          <p className="mt-2 text-xs opacity-50">
-            Facebook · YouTube · Instagram · Radio · Sebioba Royal TV
-          </p>
-          <p className="text-gold mt-2 text-[11px] font-semibold uppercase">
-            ⚠ Social links pending
-          </p>
+          <SocialLinks />
+          <p className="mt-3 text-xs opacity-50">Official ministry accounts</p>
         </div>
       </div>
 

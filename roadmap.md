@@ -8,9 +8,9 @@
 - [x] Preserve leadership, history, Church App, and branch-directory integrity
 - [x] Add framework-correct Netlify deployment configuration and documentation
 - [x] Verify desktop, tablet, mobile, accessibility, recurrence logic, links, and build status
-- [ ] Remove Radio & Television and replace Watch Live with device-aware Church App access
-- [ ] Add the moderated Testimonies submission, archive, detail view, and app handoff
-- [ ] Replace online payment placeholders with the two confirmed bank-transfer channels
-- [ ] Add official social links and equal-size app-store badge treatments
-- [ ] Refine the gold accent without changing the established editorial design
+- [x] Remove Radio & Television and replace Watch Live with device-aware Church App access
+- [x] Add the moderated Testimonies submission, archive, detail view, and app handoff
+- [x] Replace online payment placeholders with the two confirmed bank-transfer channels
+- [x] Add official social links and equal-size app-store badge treatments
+- [x] Refine the gold accent without changing the established editorial design
 - [ ] Verify navigation, forms, moderation rules, links, responsive layouts, and production build

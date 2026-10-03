@@ -1,9 +1,9 @@
 import { Link } from "@tanstack/react-router";
-import { Home as HomeIcon, Play, HandHeart, BookOpen } from "lucide-react";
+import { Home as HomeIcon, MessageSquareQuote, HandHeart, BookOpen } from "lucide-react";
 
 const TABS = [
   { to: "/", label: "Home", icon: HomeIcon },
-  { to: "/sermons", label: "Watch", icon: Play },
+  { to: "/testimonies", label: "Testify", icon: MessageSquareQuote },
   { to: "/give", label: "Give", icon: HandHeart },
   { to: "/prayer", label: "Prayer", icon: BookOpen },
 ] as const;
