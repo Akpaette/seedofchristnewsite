@@ -18,7 +18,6 @@ import { Route as EventsRouteImport } from './routes/events'
 import { Route as GiveRouteImport } from './routes/give'
 import { Route as MinistriesRouteImport } from './routes/ministries'
 import { Route as PrayerRouteImport } from './routes/prayer'
-import { Route as RadioRouteImport } from './routes/radio'
 import { Route as SermonsRouteImport } from './routes/sermons'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TestimoniesRouteImport } from './routes/testimonies'
@@ -69,11 +68,6 @@ const PrayerRoute = PrayerRouteImport.update({
   path: '/prayer',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RadioRoute = RadioRouteImport.update({
-  id: '/radio',
-  path: '/radio',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const SermonsRoute = SermonsRouteImport.update({
   id: '/sermons',
   path: '/sermons',
@@ -105,7 +99,6 @@ export interface FileRoutesByFullPath {
   '/give': typeof GiveRoute
   '/ministries': typeof MinistriesRoute
   '/prayer': typeof PrayerRoute
-  '/radio': typeof RadioRoute
   '/sermons': typeof SermonsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/testimonies': typeof TestimoniesRouteWithChildren
@@ -121,7 +114,6 @@ export interface FileRoutesByTo {
   '/give': typeof GiveRoute
   '/ministries': typeof MinistriesRoute
   '/prayer': typeof PrayerRoute
-  '/radio': typeof RadioRoute
   '/sermons': typeof SermonsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/testimonies': typeof TestimoniesRouteWithChildren
@@ -138,7 +130,6 @@ export interface FileRoutesById {
   '/give': typeof GiveRoute
   '/ministries': typeof MinistriesRoute
   '/prayer': typeof PrayerRoute
-  '/radio': typeof RadioRoute
   '/sermons': typeof SermonsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/testimonies': typeof TestimoniesRouteWithChildren
@@ -156,7 +147,6 @@ export interface FileRouteTypes {
     | '/give'
     | '/ministries'
     | '/prayer'
-    | '/radio'
     | '/sermons'
     | '/sitemap.xml'
     | '/testimonies'
@@ -172,7 +162,6 @@ export interface FileRouteTypes {
     | '/give'
     | '/ministries'
     | '/prayer'
-    | '/radio'
     | '/sermons'
     | '/sitemap.xml'
     | '/testimonies'
@@ -188,7 +177,6 @@ export interface FileRouteTypes {
     | '/give'
     | '/ministries'
     | '/prayer'
-    | '/radio'
     | '/sermons'
     | '/sitemap.xml'
     | '/testimonies'
@@ -205,7 +193,6 @@ export interface RootRouteChildren {
   GiveRoute: typeof GiveRoute
   MinistriesRoute: typeof MinistriesRoute
   PrayerRoute: typeof PrayerRoute
-  RadioRoute: typeof RadioRoute
   SermonsRoute: typeof SermonsRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TestimoniesRoute: typeof TestimoniesRouteWithChildren
@@ -276,13 +263,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrayerRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/radio': {
-      id: '/radio'
-      path: '/radio'
-      fullPath: '/radio'
-      preLoaderRoute: typeof RadioRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/sermons': {
       id: '/sermons'
       path: '/sermons'
@@ -336,7 +316,6 @@ const rootRouteChildren: RootRouteChildren = {
   GiveRoute: GiveRoute,
   MinistriesRoute: MinistriesRoute,
   PrayerRoute: PrayerRoute,
-  RadioRoute: RadioRoute,
   SermonsRoute: SermonsRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TestimoniesRoute: TestimoniesRouteWithChildren,
