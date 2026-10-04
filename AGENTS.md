@@ -13,3 +13,4 @@
 - Use Leaflet with OpenStreetMap and verified locality coordinates for branch mapping; this avoids browser secrets and prevents invented precise locations.
 - Target self-hosted production builds through Nitro's Netlify preset; this preserves TanStack Start server rendering and file-based routes.
 - Store testimony submissions in Lovable Cloud with public reads limited to published records; this preserves moderation and keeps contact details private.
+- Keep public-only server functions independent from browser auth middleware; this prevents public pages from requiring client-side backend variables.
