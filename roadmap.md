@@ -13,4 +13,4 @@
 - [x] Replace online payment placeholders with the two confirmed bank-transfer channels
 - [x] Add official social links and equal-size app-store badge treatments
 - [x] Refine the gold accent without changing the established editorial design
-- [ ] Verify navigation, forms, moderation rules, links, responsive layouts, and production build
+- [x] Verify navigation, forms, moderation rules, links, responsive layouts, and production build
