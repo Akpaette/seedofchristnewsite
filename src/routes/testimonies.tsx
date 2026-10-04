@@ -57,7 +57,7 @@ function TestimoniesPage() {
       <section className="bg-ink px-5 py-20 text-porcelain md:px-8 md:py-28">
         <div className="mx-auto max-w-6xl">
           <Label dark>God&apos;s faithfulness, shared</Label>
-          <Display as="h1" className="max-w-4xl text-5xl sm:text-6xl md:text-8xl" color="var(--color-porcelain)">
+          <Display as="h1" className="max-w-4xl text-4xl sm:text-6xl md:text-8xl" color="var(--color-porcelain)">
             TESTIMONIES
           </Display>
           <p className="mt-6 max-w-2xl text-base leading-8 text-paper/75 md:text-lg">
