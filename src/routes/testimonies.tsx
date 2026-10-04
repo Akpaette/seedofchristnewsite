@@ -172,7 +172,7 @@ function TestimoniesPage() {
             <Field label="Testimony title" id="title" required><input id="title" name="title" required minLength={3} maxLength={160} className={`${inputClass} mt-1 border-porcelain/30 text-porcelain`} /></Field>
             <Field label="Category (optional)" id="category"><select id="category" name="category" className={`${inputClass} mt-1 border-porcelain/30 bg-ink text-porcelain`}><option value="">Choose a category</option>{TESTIMONY_CATEGORIES.map((item) => <option key={item}>{item}</option>)}</select></Field>
             <Field label="Your testimony" id="story" required><textarea id="story" name="story" required minLength={20} maxLength={6000} rows={9} className={`${inputClass} mt-1 border-porcelain/30 text-porcelain`} /></Field>
-            <div className="absolute -left-[10000px]" aria-hidden="true"><label htmlFor="website">Website</label><input id="website" name="website" tabIndex={-1} autoComplete="off" /></div>
+            <div className="pointer-events-none fixed left-0 top-0 size-px overflow-hidden opacity-0" aria-hidden="true"><label htmlFor="website">Website</label><input id="website" name="website" tabIndex={-1} autoComplete="off" /></div>
             <label className="flex cursor-pointer items-start gap-3 text-sm leading-6 text-paper/80">
               <input type="checkbox" name="consent" required className="mt-1 size-5 shrink-0 accent-gold" />
               <span>I give Seed of Christ Golden Church permission to review and, where appropriate, publish my testimony on its website, social media platforms and other official ministry channels. I understand that submission does not guarantee publication.</span>
