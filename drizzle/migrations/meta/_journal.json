@@ -8,6 +8,13 @@
       "when": 1790901059314,
       "tag": "0000_create_moderated_testimonies",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1791165894359,
+      "tag": "0001_testimony_media_moderation",
+      "breakpoints": true
     }
   ]
 }
