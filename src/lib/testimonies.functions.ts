@@ -96,6 +96,84 @@ export const getPublishedTestimonies = createServerFn({ method: "GET" })
     };
   });
 
+export const submitTestimony = createServerFn({ method: "POST" })
+  .inputValidator((input: unknown) => {
+    const schema = z.object({
+      fullName: z.string().trim().min(2).max(120),
+      email: z.string().trim().email().max(200),
+      location: z.string().trim().max(120).optional(),
+      title: z.string().trim().min(3).max(160),
+      testimony: z.string().trim().max(6000).optional(),
+      category: z.enum(TESTIMONY_CATEGORIES).optional(),
+      consent: z.literal(true),
+      website: z.string().max(0).optional(),
+      audioName: z.string().max(180).optional(),
+      audioType: z.string().max(80).optional(),
+      audioSize: z.number().int().nonnegative().max(AUDIO_MAX_BYTES).optional(),
+      photoName: z.string().max(180).optional(),
+      photoType: z.string().max(80).optional(),
+      photoSize: z.number().int().nonnegative().max(PHOTO_MAX_BYTES).optional(),
+    });
+    const parsed = schema.parse(input);
+    if (parsed.audioSize && (!parsed.audioType || !AUDIO_TYPES[parsed.audioType] || !parsed.audioName?.toLowerCase().endsWith(`.${AUDIO_TYPES[parsed.audioType]}`))) throw new Error("Unsupported audio format.");
+    if (parsed.photoSize && (!parsed.photoType || !PHOTO_TYPES[parsed.photoType] || !parsed.photoName?.toLowerCase().endsWith(`.${PHOTO_TYPES[parsed.photoType]}`))) throw new Error("Unsupported photo format.");
+    if ((!parsed.testimony || parsed.testimony.length < 20) && !parsed.audioSize && !parsed.photoSize) throw new Error("Please write a testimony or attach audio or photo evidence.");
+    return parsed;
+  })
+  .handler(async ({ data }) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const ipHash = "browser-submit-" + crypto.randomUUID();
+    const since = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+    const { count, error: rateError } = await supabaseAdmin.from("submission_attempts")
+      .select("id", { count: "exact", head: true }).eq("ip_hash", ipHash).gte("created_at", since);
+    if (rateError) throw new Error("Submission service unavailable.");
+    if ((count ?? 0) >= 5) return { ok: false, message: "Too many submissions. Please try again in an hour." };
+    await supabaseAdmin.from("submission_attempts").insert({ ip_hash: ipHash });
+    const form = new FormData();
+    Object.entries(data).forEach(([key, value]) => {
+      if (value !== undefined) form.set(key, typeof value === "string" ? value : String(value));
+    });
+    const upload = async (name: string | undefined, type: string | undefined, path: string | undefined, folder: "audio" | "photos") => {
+      if (!name || !type || !path) return null;
+      const { supabaseAdmin: admin } = await import("@/integrations/supabase/client.server");
+      const response = await fetch(path);
+      if (!response.ok) throw new Error("Could not read uploaded file.");
+      const bytes = new Uint8Array(await response.arrayBuffer());
+      const ext = folder === "audio" ? AUDIO_TYPES[type] : PHOTO_TYPES[type];
+      if (!ext || bytes.byteLength > (folder === "audio" ? AUDIO_MAX_BYTES : PHOTO_MAX_BYTES)) throw new Error("Invalid media file.");
+      const destination = `${folder}/${crypto.randomUUID()}.${ext}`;
+      const { error } = await admin.storage.from(BUCKET).upload(destination, bytes, { contentType: type, upsert: false });
+      if (error) throw new Error("Media upload failed.");
+      return destination;
+    };
+    try {
+      const audioPath = await upload(data.audioName, data.audioType, form.get("audioData") as string | undefined, "audio");
+      const photoPath = await upload(data.photoName, data.photoType, form.get("photoData") as string | undefined, "photos");
+      const { error } = await supabaseAdmin.from("testimonies").insert({
+        full_name: data.fullName, email: data.email, location: data.location || null,
+        title: data.title, testimony: data.testimony || null, story: "", category: data.category || null,
+        consent: true, consent_to_publish: true, status: "pending", audio_url: audioPath, image_url: photoPath,
+      });
+      if (error) throw new Error("Testimony save failed.");
+      void notifyModerators(data.title);
+      return { ok: true, message: "Thank you. Your testimony has been received for review; submission does not guarantee publication." };
+    } catch {
+      return { ok: false, message: "We could not receive your testimony. Please try again." };
+    }
+  });
+
+async function notifyModerators(title: string) {
+  const key = process.env["RESEND_API_KEY"];
+  if (!key) return;
+  try {
+    await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ from: process.env["RESEND_FROM"] ?? "website@seedofchrist.org", to: ["admin@seedofchrist.org"], subject: "New testimony awaiting review", text: `A new testimony ("${title.slice(0, 160)}") is waiting for review.` }),
+    });
+  } catch { /* optional notification */ }
+}
+
 export const getPublishedTestimony = createServerFn({ method: "GET" })
   .inputValidator((input: unknown) => z.object({ id: z.string().uuid() }).parse(input))
   .handler(async ({ data }) => {
@@ -120,7 +198,7 @@ async function assertAdmin(context: { supabase: ReturnType<typeof createClient<D
 export const STATUSES = ["pending", "approved", "rejected", "archived"] as const;
 
 export const listForModeration = createServerFn({ method: "POST" })
-  .middleware([attachSupabaseAuth, requireSupabaseAuth])
+  .middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) => z.object({ status: z.enum(STATUSES) }).parse(input))
   .handler(async ({ data, context }) => {
     await assertAdmin(context as never);
@@ -142,14 +220,14 @@ export const listForModeration = createServerFn({ method: "POST" })
   });
 
 export const checkAdmin = createServerFn({ method: "POST" })
-  .middleware([attachSupabaseAuth, requireSupabaseAuth])
+  .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const { data } = await context.supabase.rpc("has_role", { _user_id: context.userId, _role: "admin" });
     return { isAdmin: Boolean(data) };
   });
 
 export const moderateTestimony = createServerFn({ method: "POST" })
-  .middleware([attachSupabaseAuth, requireSupabaseAuth])
+  .middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) =>
     z.object({
       id: z.string().uuid(),
