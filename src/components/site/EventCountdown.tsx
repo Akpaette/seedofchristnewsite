@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { countdownParts, nextOccurrence, type RecurrenceKind } from "@/lib/event-recurrence";
 
-export function EventCountdown({ kind, exactTime, label = "Next gathering" }: { kind: RecurrenceKind; exactTime: boolean; label?: string }) {
+export function EventCountdown({ kind, target, exactTime, label = "Next gathering" }: { kind?: RecurrenceKind; target?: Date; exactTime: boolean; label?: string }) {
   const [now, setNow] = useState<Date | null>(null);
 
   useEffect(() => {
@@ -13,13 +13,14 @@ export function EventCountdown({ kind, exactTime, label = "Next gathering" }: { 
 
   const countdown = useMemo(() => {
     if (!now) return null;
-    return countdownParts(nextOccurrence(kind, now), now);
-  }, [kind, now]);
+    const occurrence = target ?? (kind ? nextOccurrence(kind, now) : null);
+    return occurrence ? countdownParts(occurrence, now) : null;
+  }, [kind, now, target]);
 
   const parts = countdown ?? { days: 0, hours: 0, minutes: 0, seconds: 0 };
   const accessibleLabel = countdown
     ? `${parts.days} days, ${parts.hours} hours, ${parts.minutes} minutes, ${parts.seconds} seconds until the next occurrence`
-    : "Countdown loading";
+      : "Countdown loading";
 
   return (
     <div className="mt-7 border-t border-gold/25 pt-5">
