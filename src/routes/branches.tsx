@@ -1,14 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { LocateFixed, MapPin, Search } from "lucide-react";
+import { LocateFixed, Mail, MapPin, Search } from "lucide-react";
 import { BranchMap } from "@/components/site/BranchMap";
-import { Display, Flag, Page, SectionHead, inputClass } from "@/components/site/ui";
+import { Display, Page, SectionHead, inputClass } from "@/components/site/ui";
 import { BRANCH_COORDINATES } from "@/lib/branch-coordinates";
 import {
   BRANCHES,
   INTERNATIONAL,
   branchStates,
   filterBranches,
+  branchState,
   sortBranches,
 } from "@/lib/branches-data";
 
@@ -115,16 +116,11 @@ function BranchesPage() {
             </div>
             <p className="mt-1 text-sm break-words opacity-80">{b.address}</p>
             <div className="font-label mt-2 text-xs uppercase opacity-60">
-              {b.state ? `${b.state} State` : b.international ? "International" : "State not provided"}
+          {branchState(b) ? `${branchState(b)} State` : b.international ? "International · United Kingdom" : "State not provided"}
               {b.country ? ` · ${b.country}` : ""}
             </div>
-            <div className="mt-2">
-              {b.phone ? (
-                <span className="text-sm">Tel {b.phone}</span>
-              ) : (
-                <Flag>Phone &amp; service times pending</Flag>
-              )}
-            </div>
+            <p className="mt-2 text-sm">Service: 7:30 AM</p>
+            <a href="mailto:admin@seedofchrist.org" className="font-label mt-4 inline-flex min-h-11 items-center gap-2 text-xs font-semibold uppercase text-golddeep underline underline-offset-4"><Mail size={15} aria-hidden="true" />Contact church office</a>
             {BRANCH_COORDINATES[b.name] ? (
               <button type="button" onClick={() => setSelectedName(b.name)} className="font-label mt-5 inline-flex min-h-11 items-center gap-2 border border-ink px-4 py-2 text-xs font-semibold uppercase transition-colors hover:bg-ink hover:text-porcelain"><LocateFixed size={15} /> Show on map</button>
             ) : <p className="font-label mt-5 text-[0.68rem] uppercase text-foreground/50">Verified map position pending</p>}
