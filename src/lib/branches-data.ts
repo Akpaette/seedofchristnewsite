@@ -115,8 +115,22 @@ export function normalizeState(value: string | null | undefined): string | null 
   return CANONICAL_STATES.get(stateKey(value)) ?? null;
 }
 
+/** Read an explicitly written terminal state/country clue without editing the address. */
+export function branchState(branch: Branch): string | null {
+  const fieldValue = normalizeState(branch.state);
+  if (fieldValue) return fieldValue;
+  if (branch.international) return null;
+  const address = branch.address.trim();
+  for (const state of [...NIGERIAN_STATES].sort((a, b) => b.length - a.length)) {
+    const escaped = state.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    if (new RegExp(`(?:,|\\s)${escaped}(?:\\s+State)?[.\\s]*$`, "i").test(address)) return state;
+  }
+  if (/(?:,|\s)(?:FCT|Abuja)[.\s]*$/i.test(address)) return "Federal Capital Territory";
+  return null;
+}
+
 export const branchStates = (list: Branch[]) =>
-  [...new Set(list.map((branch) => normalizeState(branch.state)).filter((state): state is string => Boolean(state)))].sort((a, b) =>
+  [...new Set(list.map(branchState).filter((state): state is string => Boolean(state)))].sort((a, b) =>
     a.localeCompare(b, "en", { sensitivity: "base" }),
   );
 
@@ -125,4 +139,4 @@ export const filterBranches = (list: Branch[], filter: string) =>
     ? list
     : filter === INTERNATIONAL
       ? list.filter((b) => b.international)
-      : list.filter((branch) => normalizeState(branch.state) === normalizeState(filter));
+      : list.filter((branch) => branchState(branch) === normalizeState(filter));
