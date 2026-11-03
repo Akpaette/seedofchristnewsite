@@ -37,7 +37,7 @@ export const BRANCHES: Branch[] = [
   { name: "Eleweran, Abeokuta Branch 3", address: "Seed of Christ Golden Church, Eleweran, A & A Akingbala Road, in front of Baba Egbe's house, Ogun State.", state: "Ogun", country: NG },
   { name: "Elega, Abeokuta Branch 2", address: "Seed of Christ Golden Church, Elega, Behind Sembad Filling Station, adjacent Tipper Garage, Elega, Abeokuta, Ogun State.", state: "Ogun", country: NG },
   { name: "Fajol, Abeokuta Branch 1", address: "Seed of Christ Golden Church, Fajol, Gbàremu Fajol, Obantoko, Abeokuta, beside Adeline School, Abeokuuta, Ogun State.", state: "Ogun", country: NG },
-  { name: "Headquarters", address: "Seed of Christ Golden Church, Headquarters, Land of Reality Worldwide, Gbàremu Idi Obi, Airport Area Alakia, Ibadan, Oyo State.", state: "Oyo", country: NG, hq: true, phone: "+234 806 029 1930" },
+  { name: "Headquarters", address: "Seed of Christ Golden Church, Headquarters, Land of Reality Worldwide, Gbàremu Idi Obi, Airport Area Alakia, Ibadan, Oyo State.", state: "Oyo", country: NG, hq: true },
   { name: "Ibafo", address: "Seed of Christ Golden Church, Ibafo, Magada Onimole, Ibafo, Ogun State.", state: "Ogun", country: NG },
   { name: "Igbeti", address: "Seed of Christ Golden Church, Igbeti, Ogun State.", state: "Ogun", country: NG },
   { name: "Igbogbo", address: "Seed of Christ Golden Church, Igbogbo, Ikorodu, Lagos State.", state: "Lagos", country: NG },
