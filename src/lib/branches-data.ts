@@ -1,7 +1,6 @@
 // Branch directory — supplied verbatim by the church (67 branches).
 // `address` is the supplied display text and must NOT be spell-corrected.
-// `state` is a normalised filter value, set ONLY where the supplied text
-// explicitly names a state (e.g. "... Oyo State" / "Oyo Stae"). Never inferred.
+// `state` contains structured state data only; addresses remain display text.
 // `country` is set only where the supplied text makes it explicit.
 
 export type Branch = {
@@ -10,7 +9,6 @@ export type Branch = {
   state?: string;
   country?: string;
   international?: boolean;
-  phone?: string;
   hq?: boolean;
 };
 
@@ -94,8 +92,31 @@ export const sortBranches = (list: Branch[]) =>
 
 export const INTERNATIONAL = "International";
 
+export const NIGERIAN_STATES = [
+  "Abia", "Adamawa", "Akwa Ibom", "Anambra", "Bauchi", "Bayelsa", "Benue", "Borno",
+  "Cross River", "Delta", "Ebonyi", "Edo", "Ekiti", "Enugu", "Federal Capital Territory",
+  "Gombe", "Imo", "Jigawa", "Kaduna", "Kano", "Katsina", "Kebbi", "Kogi", "Kwara",
+  "Lagos", "Nasarawa", "Niger", "Ogun", "Ondo", "Osun", "Oyo", "Plateau", "Rivers",
+  "Sokoto", "Taraba", "Yobe", "Zamfara",
+] as const;
+
+function stateKey(value: string) {
+  return value.toLocaleLowerCase("en").replace(/[^a-z]/g, "").replace(/state$/, "");
+}
+
+const CANONICAL_STATES = new Map<string, string>(NIGERIAN_STATES.map((state) => [stateKey(state), state]));
+CANONICAL_STATES.set("fct", "Federal Capital Territory");
+CANONICAL_STATES.set("abuja", "Federal Capital Territory");
+CANONICAL_STATES.set("oyostae", "Oyo");
+
+/** Exact dictionary normalization; no substring or partial-name matches. */
+export function normalizeState(value: string | null | undefined): string | null {
+  if (!value?.trim()) return null;
+  return CANONICAL_STATES.get(stateKey(value)) ?? null;
+}
+
 export const branchStates = (list: Branch[]) =>
-  [...new Set(list.map((b) => b.state).filter((s): s is string => !!s))].sort((a, b) =>
+  [...new Set(list.map((branch) => normalizeState(branch.state)).filter((state): state is string => Boolean(state)))].sort((a, b) =>
     a.localeCompare(b, "en", { sensitivity: "base" }),
   );
 
@@ -104,4 +125,4 @@ export const filterBranches = (list: Branch[], filter: string) =>
     ? list
     : filter === INTERNATIONAL
       ? list.filter((b) => b.international)
-      : list.filter((b) => b.state === filter);
+      : list.filter((branch) => normalizeState(branch.state) === normalizeState(filter));
