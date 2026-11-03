@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Play, Smartphone } from "lucide-react";
+import { Smartphone } from "lucide-react";
 import { APP_LINKS } from "@/lib/church-data";
 import { Btn } from "./ui";
 import googlePlayBadge from "@/assets/google-play.png.asset.json";
@@ -71,7 +71,7 @@ export function DeviceAwareAppButton({
     <div className="flex flex-col items-center">
       <Btn
         tone={tone}
-        icon={children.toLowerCase().includes("live") ? Play : Smartphone}
+        icon={Smartphone}
         onClick={openAppStore}
         ariaExpanded={showChoices}
         ariaControls="app-store-options"
