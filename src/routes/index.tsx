@@ -5,6 +5,7 @@ import { Btn, Display, Label, Reveal, SectionHead, inputClass } from "@/componen
 import { PhotoReel } from "@/components/site/PhotoReel";
 import { AppBadges, DeviceAwareAppButton } from "@/components/site/AppBadges";
 import { SocialLinks } from "@/components/site/SocialLinks";
+import { UpNextPanel } from "@/components/site/UpNext";
 import apostlePhoto from "@/assets/apostle-mustapha.jpg.asset.json";
 import heroPhoto from "@/assets/church-worship-0047.jpg.asset.json";
 
@@ -53,6 +54,8 @@ function Index() {
         </div>
         <div className="absolute bottom-5 left-1/2 -translate-x-1/2 text-gold"><ArrowDown size={20} aria-hidden="true" /></div>
       </section>
+
+      <UpNextPanel />
 
       <section className="bg-ink px-5 pb-20 md:px-8"><div className="mx-auto max-w-7xl"><div className="mb-5 flex items-end justify-between gap-4 border-b border-porcelain/15 pb-4"><div><Label dark>Church life</Label><p className="text-sm text-porcelain/55">Worship, fellowship and mission</p></div></div><PhotoReel /></div></section>
 
