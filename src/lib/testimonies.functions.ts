@@ -1,16 +1,25 @@
 import { createClient } from "@supabase/supabase-js";
 import { createServerFn } from "@tanstack/react-start";
+import { getRequestHeader } from "@tanstack/react-start/server";
 import { z } from "zod";
 import type { Database } from "@/integrations/supabase/types";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { attachSupabaseAuth } from "@/integrations/supabase/auth-attacher";
-import { TESTIMONY_CATEGORIES } from "./testimony-rules";
+import { AUDIO_MAX_BYTES, AUDIO_TYPES, PHOTO_MAX_BYTES, PHOTO_TYPES, TESTIMONY_CATEGORIES } from "./testimony-rules";
 
 export { TESTIMONY_CATEGORIES } from "./testimony-rules";
 
 const BUCKET = "testimony-media";
 const PAGE_SIZE = 12;
 const PUBLIC_COLUMNS = "id, full_name, location, title, testimony, story, category, published_at, image_url, audio_url";
+const submissionSchema = z.object({
+  fullName: z.string().trim().min(2).max(120), email: z.string().trim().email().max(200),
+  location: z.string().trim().max(120).optional(), title: z.string().trim().min(3).max(160),
+  testimony: z.string().trim().max(6000).optional(), category: z.enum(TESTIMONY_CATEGORIES).optional(),
+  consent: z.literal(true), website: z.string().max(0).optional(),
+  audioData: z.string().optional(), audioType: z.string().optional(), audioName: z.string().optional(),
+  photoData: z.string().optional(), photoType: z.string().optional(), photoName: z.string().optional(),
+});
 
 export type PublicTestimony = {
   id: string;
@@ -91,6 +100,66 @@ export const getPublishedTestimonies = createServerFn({ method: "GET" })
     if (error) throw new Error("Published testimonies could not be loaded.");
     return { items: await toPublic((rows ?? []) as TestimonyRow[]), page: data.page, total: count ?? 0, totalPages: Math.max(1, Math.ceil((count ?? 0) / PAGE_SIZE)) };
   });
+
+export const submitTestimony = createServerFn({ method: "POST" })
+  .inputValidator((input: unknown) => {
+    const data = submissionSchema.parse(input);
+    const audioSize = data.audioData ? Math.floor(data.audioData.length * 3 / 4) : 0;
+    const photoSize = data.photoData ? Math.floor(data.photoData.length * 3 / 4) : 0;
+    if (audioSize > AUDIO_MAX_BYTES || (data.audioData && (!data.audioType || !AUDIO_TYPES[data.audioType] || !data.audioName?.toLowerCase().endsWith(`.${AUDIO_TYPES[data.audioType]}`)))) throw new Error("Audio must be MP3, M4A, AAC, WAV, OGG or WebM and under 10 MB.");
+    if (photoSize > PHOTO_MAX_BYTES || (data.photoData && (!data.photoType || !PHOTO_TYPES[data.photoType] || !/\.(jpe?g|png|webp)$/i.test(data.photoName ?? "")))) throw new Error("Photo must be JPEG, PNG or WebP and under 5 MB.");
+    if ((!data.testimony || data.testimony.length < 20) && !data.audioData && !data.photoData) throw new Error("Please write at least 20 characters or attach audio or photo evidence.");
+    return data;
+  })
+  .handler(async ({ data }) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const ip = getRequestHeader("cf-connecting-ip") || getRequestHeader("x-nf-client-connection-ip") || "unknown";
+    const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(`testimony:${ip}`));
+    const ipHash = Array.from(new Uint8Array(digest), (b) => b.toString(16).padStart(2, "0")).join("");
+    const since = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+    const { count, error } = await supabaseAdmin.from("submission_attempts").select("id", { count: "exact", head: true }).eq("ip_hash", ipHash).gte("created_at", since);
+    if (error) throw new Error("Submission service unavailable.");
+    if ((count ?? 0) >= 5) return { ok: false, message: "Too many submissions from this connection. Please try again in an hour." };
+    const { error: attemptError } = await supabaseAdmin.from("submission_attempts").insert({ ip_hash: ipHash });
+    if (attemptError) throw new Error("Submission service unavailable.");
+    const uploaded: string[] = [];
+    const upload = async (encoded: string | undefined, mime: string | undefined, types: Record<string, string>, folder: "audio" | "photos") => {
+      if (!encoded || !mime) return null;
+      const bytes = Uint8Array.from(atob(encoded), (char) => char.charCodeAt(0));
+      const path = `${folder}/${crypto.randomUUID()}.${types[mime]}`;
+      const { error: uploadError } = await supabaseAdmin.storage.from(BUCKET).upload(path, bytes, { contentType: mime, upsert: false });
+      if (uploadError) throw new Error("Media upload failed.");
+      uploaded.push(path);
+      return path;
+    };
+    try {
+      const audioPath = await upload(data.audioData, data.audioType, AUDIO_TYPES, "audio");
+      const photoPath = await upload(data.photoData, data.photoType, PHOTO_TYPES, "photos");
+      const { error: insertError } = await supabaseAdmin.from("testimonies").insert({
+        full_name: data.fullName, email: data.email, location: data.location || null, title: data.title,
+        testimony: data.testimony || null, story: "", category: data.category || null,
+        consent: true, consent_to_publish: true, status: "pending", audio_url: audioPath, image_url: photoPath,
+      });
+      if (insertError) throw new Error("Testimony save failed.");
+      void notifyAdmin(data.title);
+      return { ok: true, message: "Thank you. Your testimony has been received for review; submission does not guarantee publication." };
+    } catch (error) {
+      console.error("Testimony submission failed", error instanceof Error ? error.message : "unknown");
+      if (uploaded.length) await supabaseAdmin.storage.from(BUCKET).remove(uploaded);
+      return { ok: false, message: "We could not receive your testimony. Please try again." };
+    }
+  });
+
+async function notifyAdmin(title: string) {
+  const key = process.env["RESEND_API_KEY"];
+  if (!key) return;
+  try {
+    await fetch("https://api.resend.com/emails", {
+      method: "POST", headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ from: process.env["RESEND_FROM"] ?? "website@seedofchrist.org", to: ["admin@seedofchrist.org"], subject: "New testimony awaiting review", text: `A new testimony (\"${title.slice(0, 160)}\") is waiting for review.` }),
+    });
+  } catch { /* optional notification */ }
+}
 
 export const getPublishedTestimony = createServerFn({ method: "GET" })
   .inputValidator((input: unknown) => z.object({ id: z.string().uuid() }).parse(input))
