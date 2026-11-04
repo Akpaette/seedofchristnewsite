@@ -104,7 +104,7 @@ export const getPublishedTestimony = createServerFn({ method: "GET" })
 export const STATUSES = ["pending", "approved", "rejected", "archived"] as const;
 
 export const checkAdmin = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([attachSupabaseAuth, requireSupabaseAuth])
   .handler(async ({ context }) => {
     const { data, error } = await context.supabase.rpc("has_role", { _user_id: context.userId, _role: "admin" });
     if (error) throw new Error("Could not verify administrator access.");
@@ -112,7 +112,7 @@ export const checkAdmin = createServerFn({ method: "POST" })
   });
 
 export const listForModeration = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([attachSupabaseAuth, requireSupabaseAuth])
   .inputValidator((input: unknown) => z.object({ status: z.enum(STATUSES) }).parse(input))
   .handler(async ({ data, context }) => {
     const { data: isAdmin } = await context.supabase.rpc("has_role", { _user_id: context.userId, _role: "admin" });
@@ -132,7 +132,7 @@ export const listForModeration = createServerFn({ method: "POST" })
   });
 
 export const moderateTestimony = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([attachSupabaseAuth, requireSupabaseAuth])
   .inputValidator((input: unknown) => z.object({ id: z.string().uuid(), action: z.enum(["approve", "reject", "archive"]), reason: z.string().trim().max(1000).optional() }).parse(input))
   .handler(async ({ data, context }) => {
     const { data: isAdmin } = await context.supabase.rpc("has_role", { _user_id: context.userId, _role: "admin" });
