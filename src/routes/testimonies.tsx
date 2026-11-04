@@ -1,11 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useServerFn } from "@tanstack/react-start";
-import { useMemo, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, ImagePlus, Search, Send, Video } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { ArrowLeft, ArrowRight, Search, Send, Video } from "lucide-react";
 import { AppBadges, DeviceAwareAppButton } from "@/components/site/AppBadges";
 import { SocialLinks } from "@/components/site/SocialLinks";
 import { Btn, Display, Label, SectionHead, inputClass } from "@/components/site/ui";
-import { getPublishedTestimonies, submitTestimony, TESTIMONY_CATEGORIES } from "@/lib/testimonies.functions";
+import { getPublishedTestimonies, TESTIMONY_CATEGORIES } from "@/lib/testimonies.functions";
 import { AUDIO_ACCEPT, AUDIO_MAX_BYTES, PHOTO_ACCEPT, PHOTO_MAX_BYTES, sanitizePhoto } from "@/lib/testimony-rules";
 
 const TITLE = "Testimonies | Seed of Christ Golden Church Worldwide";
@@ -23,7 +22,6 @@ export const Route = createFileRoute("/testimonies")({
 
 function TestimoniesPage() {
   const archive = Route.useLoaderData();
-  const submit = useServerFn(submitTestimony);
   const formRef = useRef<HTMLFormElement>(null);
   const [busy, setBusy] = useState(false);
   const [result, setResult] = useState<{ ok: boolean; message: string } | null>(null);
@@ -33,6 +31,13 @@ function TestimoniesPage() {
   const [audio, setAudio] = useState<File | null>(null);
   const [photo, setPhoto] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState("");
+  const [audioPreview, setAudioPreview] = useState("");
+  useEffect(() => {
+    if (!audio) { setAudioPreview(""); return; }
+    const url = URL.createObjectURL(audio);
+    setAudioPreview(url);
+    return () => URL.revokeObjectURL(url);
+  }, [audio]);
   const filtered = useMemo(() => archive.items.filter((item) => {
     const normalized = query.trim().toLowerCase();
     return (!category || item.category === category) && (!normalized || [item.title, item.testimony, item.full_name, item.location].filter(Boolean).some((value) => value?.toLowerCase().includes(normalized)));
@@ -62,19 +67,16 @@ function TestimoniesPage() {
     if (!formRef.current) return;
     const form = formRef.current;
     const values = new FormData(form);
-    const audioData = audio ? await readBase64(audio) : undefined;
-    const photoData = photo ? await readBase64(photo) : undefined;
+    values.delete("audio");
+    values.delete("photo");
+    if (audio) values.set("audio", audio);
+    if (photo) values.set("photo", photo);
+    values.set("consent", values.get("consent") === "on" ? "true" : "false");
     setBusy(true);
     setResult(null);
     try {
-      const response = await submit({ data: {
-        fullName: String(values.get("fullName") ?? ""), email: String(values.get("email") ?? ""),
-        location: String(values.get("location") ?? ""), title: String(values.get("title") ?? ""),
-        testimony: String(values.get("testimony") ?? ""), category: String(values.get("category") || "") || undefined,
-        consent: values.get("consent") === "on", website: String(values.get("website") ?? ""),
-        audioData, audioType: audio?.type, audioName: audio?.name,
-        photoData, photoType: photo?.type, photoName: photo?.name,
-      } });
+      const request = await fetch("/api/public/testimonies", { method: "POST", body: values });
+      const response = await request.json() as { ok: boolean; message: string };
       setResult(response);
       if (response.ok) {
         form.reset(); setAudio(null); setPhoto(null);
@@ -108,7 +110,7 @@ function TestimoniesPage() {
             <div className="grid gap-5 sm:grid-cols-2"><Field label="Full name" id="fullName" required><input id="fullName" name="fullName" required minLength={2} maxLength={120} autoComplete="name" className={`${inputClass} mt-1 border-porcelain/30 text-porcelain`} /></Field><Field label="Email address" id="email" required><input id="email" name="email" type="email" required maxLength={200} autoComplete="email" className={`${inputClass} mt-1 border-porcelain/30 text-porcelain`} /></Field><Field label="Location / city (optional)" id="location"><input id="location" name="location" maxLength={120} autoComplete="address-level2" className={`${inputClass} mt-1 border-porcelain/30 text-porcelain`} /></Field><Field label="Testimony title" id="title" required><input id="title" name="title" required minLength={3} maxLength={160} className={`${inputClass} mt-1 border-porcelain/30 text-porcelain`} /></Field></div>
             <Field label="Category (optional)" id="category"><select id="category" name="category" className={`${inputClass} mt-1 border-porcelain/30 bg-ink text-porcelain`}><option value="">Choose a category</option>{TESTIMONY_CATEGORIES.map((item) => <option key={item}>{item}</option>)}</select></Field>
             <Field label="Written testimony (optional when evidence is attached)" id="testimony"><textarea id="testimony" name="testimony" maxLength={6000} rows={8} className={`${inputClass} mt-1 border-porcelain/30 text-porcelain`} /></Field>
-            <div className="grid gap-5 sm:grid-cols-2"><Field label="Audio testimony (optional · up to 10 MB)" id="audio"><input id="audio" type="file" accept={AUDIO_ACCEPT} onChange={(event) => { const chosen = event.target.files?.[0] ?? null; setAudio(chosen && chosen.size <= AUDIO_MAX_BYTES ? chosen : null); if (chosen && chosen.size > AUDIO_MAX_BYTES) setResult({ ok: false, message: "Audio files must be under 10 MB." }); }} className={`${inputClass} mt-1 border-porcelain/30 text-porcelain file:mr-3 file:border-0 file:bg-gold file:px-3 file:py-2 file:text-ink`} />{audio && <audio controls preload="metadata" src={URL.createObjectURL(audio)} className="mt-3 w-full" />}</Field>
+            <div className="grid gap-5 sm:grid-cols-2"><Field label="Audio testimony (optional · up to 10 MB)" id="audio"><input id="audio" type="file" accept={AUDIO_ACCEPT} onChange={(event) => { const chosen = event.target.files?.[0] ?? null; setAudio(chosen && chosen.size <= AUDIO_MAX_BYTES && AUDIO_ACCEPT.toLowerCase().includes(chosen.type.toLowerCase()) ? chosen : null); if (chosen && (chosen.size > AUDIO_MAX_BYTES || !AUDIO_ACCEPT.toLowerCase().includes(chosen.type.toLowerCase()))) setResult({ ok: false, message: "Choose a supported audio file under 10 MB." }); }} className={`${inputClass} mt-1 border-porcelain/30 text-porcelain file:mr-3 file:border-0 file:bg-gold file:px-3 file:py-2 file:text-ink`} />{audioPreview && <audio controls preload="metadata" src={audioPreview} className="mt-3 w-full" />}</Field>
               <Field label="Photo evidence (optional · up to 5 MB)" id="photo"><input id="photo" type="file" accept={PHOTO_ACCEPT} onChange={(event) => void handlePhoto(event.target.files?.[0])} className={`${inputClass} mt-1 border-porcelain/30 text-porcelain file:mr-3 file:border-0 file:bg-gold file:px-3 file:py-2 file:text-ink`} />{photoPreview && <img src={photoPreview} alt="Preview of selected testimony photo" className="mt-3 max-h-48 max-w-full object-contain" />}</Field></div>
             <div className="pointer-events-none fixed left-0 top-0 size-px overflow-hidden opacity-0" aria-hidden="true"><label htmlFor="website">Website</label><input id="website" name="website" tabIndex={-1} autoComplete="off" /></div>
             <label className="flex cursor-pointer items-start gap-3 text-sm leading-6 text-paper/80"><input type="checkbox" name="consent" required className="mt-1 size-5 shrink-0 accent-gold" /><span>I give Seed of Christ Golden Church permission to review and, where appropriate, publish my testimony on its website, social media platforms and other official ministry channels. I understand that submission does not guarantee publication.</span></label>
@@ -129,12 +131,4 @@ function Field({ label, id, required = false, children }: { label: string; id: s
 
 function formatDate(value: string) {
   return new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric" }).format(new Date(value));
-}
-
-async function readBase64(file: File) {
-  const bytes = new Uint8Array(await file.arrayBuffer());
-  let binary = "";
-  const chunk = 0x8000;
-  for (let index = 0; index < bytes.length; index += chunk) binary += String.fromCharCode(...bytes.subarray(index, index + chunk));
-  return btoa(binary);
 }
