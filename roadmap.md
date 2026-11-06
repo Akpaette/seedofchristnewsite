@@ -14,3 +14,10 @@
 - [x] Add official social links and equal-size app-store badge treatments
 - [x] Refine the gold accent without changing the established editorial design
 - [x] Verify navigation, forms, moderation rules, links, responsive layouts, and production build
+- [ ] Repair testimony public submission endpoint and detail fields; add direct email alternative
+- [ ] Complete a usable authenticated moderation page and verify approved-only public reads
+- [ ] Verify recurring Up Next remains synchronized on Home and Events
+- [ ] Confirm branch normalization, contacts, service times, and giving details
+- [ ] Remove Vercel deployment references and document Netlify-only setup without guessing DNS
+- [ ] Verify app-first behavior only where real app association exists; otherwise retain safe store fallback
+- [ ] Run production build and browser checks; report remaining owner-side configuration
