@@ -133,7 +133,7 @@ export const recordEmailedTestimony = createServerFn({ method: "POST" })
     title: z.string().trim().min(3).max(160),
     testimony: z.string().trim().min(20).max(6000),
     category: z.enum(TESTIMONY_CATEGORIES).optional(),
-    consentConfirmed: z.literal(true),
+    consentConfirmed: z.boolean(),
   }).parse(input))
   .handler(async ({ data, context }) => {
     const { data: isAdmin, error: roleError } = await context.supabase.rpc("has_role", { _user_id: context.userId, _role: "admin" });
@@ -148,7 +148,7 @@ export const recordEmailedTestimony = createServerFn({ method: "POST" })
       story: "",
       category: data.category || null,
       consent: true,
-      consent_to_publish: true,
+      consent_to_publish: data.consentConfirmed,
       status: "pending",
     });
     if (error) throw new Error("Could not add this emailed testimony for review.");
