@@ -106,7 +106,7 @@ export const getPublishedTestimonies = createServerFn({ method: "GET" })
         console.error("Could not load public testimonies.");
         return { items: [], page: data.page, total: 0, totalPages: 1, error: "Published testimonies are temporarily unavailable." };
       }
-      return { items: await toPublic((rows ?? []) as TestimonyRow[]), page: data.page, total: count ?? 0, totalPages: Math.max(1, Math.ceil((count ?? 0) / PAGE_SIZE)) };
+      return { items: await toPublic((rows ?? []) as TestimonyRow[]), page: data.page, total: count ?? 0, totalPages: Math.max(1, Math.ceil((count ?? 0) / PAGE_SIZE)), error: null as string | null };
     } catch {
       console.error("Could not connect to the public testimony service.");
       return { items: [], page: data.page, total: 0, totalPages: 1, error: "Published testimonies are temporarily unavailable." };
