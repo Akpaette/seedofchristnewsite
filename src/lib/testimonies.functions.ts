@@ -185,7 +185,9 @@ export const listForModeration = createServerFn({ method: "POST" })
 
 export const moderateTestimony = createServerFn({ method: "POST" })
   .middleware([attachSupabaseAuth, requireSupabaseAuth])
-  .inputValidator((input: unknown) => z.object({ id: z.string().uuid(), action: z.enum(["approve", "reject", "archive"]), reason: z.string().trim().max(1000).optional() }).parse(input))
+  .inputValidator((input: unknown) => z.object({ id: z.string().uuid(), action: z.enum(["approve", "reject", "archive"]), reason: z.string().trim().max(1000).optional() }).superRefine((value, context) => {
+    if (value.action === "reject" && !value.reason) context.addIssue({ code: "custom", message: "A rejection reason is required.", path: ["reason"] });
+  }).parse(input))
   .handler(async ({ data, context }) => {
     const { data: isAdmin } = await context.supabase.rpc("has_role", { _user_id: context.userId, _role: "admin" });
     if (!isAdmin) throw new Error("Forbidden");

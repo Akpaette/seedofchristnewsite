@@ -48,7 +48,7 @@ async function sendNotification(title: string) {
     await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ from: process.env["RESEND_FROM"] ?? "website@seedofchrist.org", to: ["admin@seedofchrist.org"], subject: "New testimony awaiting review", text: `A new testimony ("${title.slice(0, 160)}") is waiting for review.` }),
+      body: JSON.stringify({ from: process.env["RESEND_FROM"] ?? "website@seedofchrist.org", to: ["testimonies@seedofchrist.org"], subject: "New testimony awaiting review", text: `A new testimony ("${title.slice(0, 160)}") is waiting for review.` }),
     });
   } catch { /* Notification is optional. */ }
 }
