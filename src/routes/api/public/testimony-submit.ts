@@ -48,7 +48,7 @@ async function sendNotification(title: string) {
     await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ from: process.env["RESEND_FROM"] ?? "website@seedofchrist.org", to: ["admin@seedofchrist.org"], subject: "New testimony awaiting review", text: `A new testimony ("${title.slice(0, 160)}") is waiting for review.` }),
+      body: JSON.stringify({ from: process.env["RESEND_FROM"] ?? "website@seedofchrist.org", to: ["testimonies@seedofchrist.org"], subject: "New testimony awaiting review", text: `A new testimony ("${title.slice(0, 160)}") is waiting for review.` }),
     });
   } catch { /* Notification is optional. */ }
 }
@@ -83,8 +83,8 @@ async function handle(request: Request) {
   const audio = asFile("audio");
   const photo = asFile("photo");
   if (payload.website) return Response.json({ ok: true, message: "Thank you. Your testimony has been received for review; submission does not guarantee publication." });
-  if ((!payload.testimony || payload.testimony.length < 20) && !audio && !photo) {
-    return Response.json({ ok: false, message: "Please write at least 20 characters or attach audio or photo evidence." }, { status: 400 });
+  if ((!payload.testimony || payload.testimony.length < 20) && !audio) {
+    return Response.json({ ok: false, message: "Please write at least 20 characters or attach an audio testimony. A photo alone cannot replace either." }, { status: 400 });
   }
   if (audio && (!AUDIO_TYPES[audio.type] || audio.size > AUDIO_LIMIT || !audio.name.toLowerCase().endsWith(`.${AUDIO_TYPES[audio.type]}`))) {
     return Response.json({ ok: false, message: "Audio must be MP3, M4A, AAC, WAV, OGG or WebM and under 10 MB." }, { status: 400 });

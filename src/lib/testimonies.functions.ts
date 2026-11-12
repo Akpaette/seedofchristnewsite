@@ -106,7 +106,7 @@ export const getPublishedTestimonies = createServerFn({ method: "GET" })
         console.error("Could not load public testimonies.");
         return { items: [], page: data.page, total: 0, totalPages: 1, error: "Published testimonies are temporarily unavailable." };
       }
-      return { items: await toPublic((rows ?? []) as TestimonyRow[]), page: data.page, total: count ?? 0, totalPages: Math.max(1, Math.ceil((count ?? 0) / PAGE_SIZE)) };
+      return { items: await toPublic((rows ?? []) as TestimonyRow[]), page: data.page, total: count ?? 0, totalPages: Math.max(1, Math.ceil((count ?? 0) / PAGE_SIZE)), error: null as string | null };
     } catch {
       console.error("Could not connect to the public testimony service.");
       return { items: [], page: data.page, total: 0, totalPages: 1, error: "Published testimonies are temporarily unavailable." };
@@ -133,7 +133,7 @@ export const recordEmailedTestimony = createServerFn({ method: "POST" })
     title: z.string().trim().min(3).max(160),
     testimony: z.string().trim().min(20).max(6000),
     category: z.enum(TESTIMONY_CATEGORIES).optional(),
-    consentConfirmed: z.literal(true),
+    consentConfirmed: z.boolean(),
   }).parse(input))
   .handler(async ({ data, context }) => {
     const { data: isAdmin, error: roleError } = await context.supabase.rpc("has_role", { _user_id: context.userId, _role: "admin" });
@@ -148,7 +148,7 @@ export const recordEmailedTestimony = createServerFn({ method: "POST" })
       story: "",
       category: data.category || null,
       consent: true,
-      consent_to_publish: true,
+      consent_to_publish: data.consentConfirmed,
       status: "pending",
     });
     if (error) throw new Error("Could not add this emailed testimony for review.");
@@ -185,7 +185,9 @@ export const listForModeration = createServerFn({ method: "POST" })
 
 export const moderateTestimony = createServerFn({ method: "POST" })
   .middleware([attachSupabaseAuth, requireSupabaseAuth])
-  .inputValidator((input: unknown) => z.object({ id: z.string().uuid(), action: z.enum(["approve", "reject", "archive"]), reason: z.string().trim().max(1000).optional() }).parse(input))
+  .inputValidator((input: unknown) => z.object({ id: z.string().uuid(), action: z.enum(["approve", "reject", "archive"]), reason: z.string().trim().max(1000).optional() }).superRefine((value, context) => {
+    if (value.action === "reject" && !value.reason) context.addIssue({ code: "custom", message: "A rejection reason is required.", path: ["reason"] });
+  }).parse(input))
   .handler(async ({ data, context }) => {
     const { data: isAdmin } = await context.supabase.rpc("has_role", { _user_id: context.userId, _role: "admin" });
     if (!isAdmin) throw new Error("Forbidden");

@@ -44,8 +44,8 @@ function TestimonyDetail() {
       </header>
       <article className="mx-auto max-w-3xl px-5 py-16 md:px-8 md:py-24">
         {testimony.image_url && <img src={testimony.image_url} alt={`Supporting photograph for ${testimony.title}`} className="mb-12 max-h-[620px] w-full object-cover" />}
-        <div className="space-y-6 text-base leading-8 md:text-lg md:leading-9">{testimony.story.split(/\n{2,}/).map((paragraph) => <p key={paragraph.slice(0, 80)}>{paragraph}</p>)}</div>
-        {testimony.video_url && <div className="mt-12"><a href={testimony.video_url} target="_blank" rel="noopener noreferrer" className="font-label inline-flex min-h-12 items-center border-2 border-ink px-5 text-xs font-bold uppercase">Watch approved testimony video</a></div>}
+        {testimony.testimony && <div className="space-y-6 text-base leading-8 md:text-lg md:leading-9">{testimony.testimony.split(/\n{2,}/).map((paragraph, index) => <p key={`${index}-${paragraph.slice(0, 60)}`}>{paragraph}</p>)}</div>}
+        {testimony.audio_url && <div className="mt-12"><p className="font-label mb-3 text-xs font-bold uppercase">Audio testimony</p><audio controls preload="metadata" src={testimony.audio_url} className="w-full" aria-label={`Audio testimony: ${testimony.title}`} /></div>}
       </article>
     </main>
   );
